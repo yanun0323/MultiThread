@@ -13,14 +13,14 @@ final class UserTask: NSObject, Identifiable, Codable {
     var title: String = ""
     var note: String = ""
     var other: String = ""
-    var deadline: Date
+    var deadline: Date?
     
     init(title: String, note: String = "", ohter: String = "", deadline: Date? = nil) {
         self.id = UUID()
         self.title = title
         self.note = note
         self.other = ohter
-        self.deadline = deadline ?? Date.Parse(date: "2000-01-01", layout: "yyyy-MM-dd")!
+        self.deadline = deadline
     }
 }
 

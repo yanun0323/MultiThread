@@ -7,26 +7,34 @@
 
 import CoreData
 
+public class EmergencyEntry: NSManagedObject {
+    @NSManaged public var id: UUID
+    @NSManaged public var index: Int64
+    @NSManaged public var title: String
+    @NSManaged public var note: String
+    @NSManaged public var other: String
+    @NSManaged public var deadline: Date?
+}
 // MARK: Function
-extension EmergencyEntry {
-    static func Create(_ context: NSManagedObjectContext, _ userTask: UserTask, _ index: Int) throws {
-        let newData = EmergencyEntry(context: context)
-        newData.id = userTask.id
-        newData.index = Int64(index)
-        newData.title = userTask.title
-        newData.note = userTask.note
-        newData.other = userTask.other
-        newData.deadline = userTask.deadline
+//extension EmergencyEntry {
+//    static func Create(_ context: NSManagedObjectContext, _ userTask: UserTask, _ index: Int) throws {
+//        let newData = EmergencyEntry(context: context)
+//        newData.id = userTask.id
+//        newData.index = Int64(index)
+//        newData.title = userTask.title
+//        newData.note = userTask.note
+//        newData.other = userTask.other
+//        newData.deadline = userTask.deadline
+//
+//        try context.save()
+//    }
 
-        try context.save()
-    }
-
-    static func Update(context: NSManagedObjectContext) {
-        
-    }
-
-    static func Delete(context: NSManagedObjectContext, index: Int) {
-    }
+//    static func Update(context: NSManagedObjectContext) {
+//
+//    }
+//
+//    static func Delete(context: NSManagedObjectContext, index: Int) {
+//    }
 
     //    func addItem() {
     //        let newData = UserTask(context: context)
@@ -56,4 +64,4 @@ extension EmergencyEntry {
     //            }
     //        }
     //    }
-}
+//}

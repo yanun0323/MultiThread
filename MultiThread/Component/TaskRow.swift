@@ -5,6 +5,7 @@
 //  Created by YanunYang on 2022/7/21.
 //
 
+import Foundation
 import SwiftUI
 import UIComponent
 
@@ -48,11 +49,10 @@ struct TaskRow: View {
 }
 
 // MARK: View Block
+
 extension TaskRow {
-    
     var TitleRowBlock: some View {
         HStack(spacing: 0) {
-            
             Block(width: 5)
             
             TextField("輸入標題...", text: $title)
@@ -69,7 +69,6 @@ extension TaskRow {
     
     var NoteRowBlock: some View {
         HStack(spacing: 0) {
-            
             Block(width: 5)
             
             if linked {
@@ -77,9 +76,14 @@ extension TaskRow {
                     width: 30, height: 11, color: .primary25, radius: 1,
                     border: 0, style: .linked
                 ) {
-                    let str = userTask.note.split(separator: " ")
-                    let url = str.first(where: {$0.contains("https://")})
-                    if let url = URL(string: url?.description ?? ""){
+                    let str = userTask.note.split(separator: " ").first(where: { $0.contains("https://") })
+                    guard let separated = str?.split(separator: "/", maxSplits: 1, omittingEmptySubsequences: true) else { return }
+                    if separated.isEmpty { return }
+                    guard var component = URLComponents(string: separated[0].description) else { return }
+                    if separated.count > 0 {
+                        component.path = separated[1].description
+                    }
+                    if let url = component.url {
                         openURL(url)
                     }
                 } content: {
@@ -120,7 +124,7 @@ extension TaskRow {
                         .font(.system(size: 14, weight: .thin, design: .default))
                         .background(.clear)
                         .frame(width: mainViewModel.Setting.PopoverWidth,
-                               height: CGFloat((other.filter({ $0 == "\n" }).count+1) * (14+3)),
+                               height: CGFloat((other.filter { $0 == "\n" }.count+1) * (14+3)),
                                alignment: .leading)
                         .onChange(of: other) { value in
                             userTask.other = value
@@ -130,16 +134,14 @@ extension TaskRow {
                 .padding(.horizontal)
             }
     }
-    
 }
 
 // MARK: Function
+
 extension TaskRow {
-    
     func IsLink(_ str: String) -> Bool {
         str.contains("https://")
     }
-    
 }
 
 struct TaskRow_Previews: PreviewProvider {

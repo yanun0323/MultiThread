@@ -13,7 +13,7 @@ public class ProcessingEntry: NSManagedObject {
     @NSManaged public var title: String
     @NSManaged public var note: String
     @NSManaged public var other: String
-    @NSManaged public var deadline: Date
+    @NSManaged public var deadline: Date?
 }
 
 // MARK: Function

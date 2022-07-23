@@ -17,11 +17,13 @@ struct TaskView: View {
     @State var mainColor: Color
     @State private var hovered: Bool = false
     
-    @FetchRequest(sortDescriptors: [
-        SortDescriptor(\.index)
-    ])
+    @FetchRequest(sortDescriptors: [ SortDescriptor(\.index) ])
     private var emergencyEntry: FetchedResults<EmergencyEntry>
+    
+    @FetchRequest(sortDescriptors: [ SortDescriptor(\.index) ])
     private var processingEntry: FetchedResults<ProcessingEntry>
+    
+    @FetchRequest(sortDescriptors: [ SortDescriptor(\.index) ])
     private var todoEntry: FetchedResults<TodoEntry>
     
     var body: some View {
