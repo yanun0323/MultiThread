@@ -7,19 +7,53 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A8629A602889A48800C52F07 /* NSTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8629A5F2889A48800C52F07 /* NSTableView.swift */; };
+		A8629A622889AC3800C52F07 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8629A612889AC3800C52F07 /* Color.swift */; };
+		A8629A64288A4E1500C52F07 /* SwiftUIListReorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8629A63288A4E1500C52F07 /* SwiftUIListReorder.swift */; };
 		A884C9952888F6AD00E30F86 /* MultiThreadApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A884C9942888F6AD00E30F86 /* MultiThreadApp.swift */; };
 		A884C9972888F6AD00E30F86 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A884C9962888F6AD00E30F86 /* ContentView.swift */; };
 		A884C9992888F6AF00E30F86 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A884C9982888F6AF00E30F86 /* Assets.xcassets */; };
 		A884C99C2888F6AF00E30F86 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A884C99B2888F6AF00E30F86 /* Preview Assets.xcassets */; };
+		A884C9AB28891ABD00E30F86 /* TaskRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = A884C9AA28891ABD00E30F86 /* TaskRow.swift */; };
+		A884C9AD28891ACF00E30F86 /* UserTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = A884C9AC28891ACF00E30F86 /* UserTask.swift */; };
+		A884C9AF28891B4200E30F86 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A884C9AE28891B4200E30F86 /* MainViewModel.swift */; };
+		A884C9B42889217F00E30F86 /* UIComponent in Frameworks */ = {isa = PBXBuildFile; productRef = A884C9B32889217F00E30F86 /* UIComponent */; };
+		A884C9B9288942F300E30F86 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = A884C9B8288942F300E30F86 /* Config.swift */; };
+		A884C9BD288953F000E30F86 /* Mock.swift in Sources */ = {isa = PBXBuildFile; fileRef = A884C9BC288953F000E30F86 /* Mock.swift */; };
+		A884C9BF288963D000E30F86 /* TaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A884C9BE288963D000E30F86 /* TaskView.swift */; };
+		A8A2C6B0288B1FE800D75458 /* NSTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8A2C6AF288B1FE800D75458 /* NSTextView.swift */; };
+		A8A2C6B2288B274E00D75458 /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8A2C6B1288B274E00D75458 /* SettingView.swift */; };
+		A8A2C6B5288B40A400D75458 /* Database.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A8A2C6B3288B40A400D75458 /* Database.xcdatamodeld */; };
+		A8A2C6B7288B418100D75458 /* EmergencyEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8A2C6B6288B418100D75458 /* EmergencyEntry.swift */; };
+		A8A2C6B9288B41DB00D75458 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8A2C6B8288B41DB00D75458 /* Persistence.swift */; };
+		A8A2C6BB288BCF6200D75458 /* ProcessingEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8A2C6BA288BCF6200D75458 /* ProcessingEntry.swift */; };
+		A8A2C6BD288BCF6B00D75458 /* TodoEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8A2C6BC288BCF6B00D75458 /* TodoEntry.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A8629A5F2889A48800C52F07 /* NSTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSTableView.swift; sourceTree = "<group>"; };
+		A8629A612889AC3800C52F07 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
+		A8629A63288A4E1500C52F07 /* SwiftUIListReorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIListReorder.swift; sourceTree = "<group>"; };
 		A884C9912888F6AD00E30F86 /* MultiThread.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MultiThread.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A884C9942888F6AD00E30F86 /* MultiThreadApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiThreadApp.swift; sourceTree = "<group>"; };
 		A884C9962888F6AD00E30F86 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		A884C9982888F6AF00E30F86 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A884C99B2888F6AF00E30F86 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		A884C99D2888F6AF00E30F86 /* MultiThread.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MultiThread.entitlements; sourceTree = "<group>"; };
+		A884C9A62888FB4B00E30F86 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		A884C9AA28891ABD00E30F86 /* TaskRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskRow.swift; sourceTree = "<group>"; };
+		A884C9AC28891ACF00E30F86 /* UserTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTask.swift; sourceTree = "<group>"; };
+		A884C9AE28891B4200E30F86 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
+		A884C9B8288942F300E30F86 /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
+		A884C9BC288953F000E30F86 /* Mock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mock.swift; sourceTree = "<group>"; };
+		A884C9BE288963D000E30F86 /* TaskView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskView.swift; sourceTree = "<group>"; };
+		A8A2C6AF288B1FE800D75458 /* NSTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSTextView.swift; sourceTree = "<group>"; };
+		A8A2C6B1288B274E00D75458 /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
+		A8A2C6B4288B40A400D75458 /* Database.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Database.xcdatamodel; sourceTree = "<group>"; };
+		A8A2C6B6288B418100D75458 /* EmergencyEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmergencyEntry.swift; sourceTree = "<group>"; };
+		A8A2C6B8288B41DB00D75458 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
+		A8A2C6BA288BCF6200D75458 /* ProcessingEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProcessingEntry.swift; sourceTree = "<group>"; };
+		A8A2C6BC288BCF6B00D75458 /* TodoEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoEntry.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -27,12 +61,23 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A884C9B42889217F00E30F86 /* UIComponent in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A8629A5E2889A47600C52F07 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				A8A2C6AF288B1FE800D75458 /* NSTextView.swift */,
+				A8629A5F2889A48800C52F07 /* NSTableView.swift */,
+				A8629A612889AC3800C52F07 /* Color.swift */,
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
 		A884C9882888F6AD00E30F86 = {
 			isa = PBXGroup;
 			children = (
@@ -52,8 +97,16 @@
 		A884C9932888F6AD00E30F86 /* MultiThread */ = {
 			isa = PBXGroup;
 			children = (
+				A884C9A62888FB4B00E30F86 /* Info.plist */,
 				A884C9942888F6AD00E30F86 /* MultiThreadApp.swift */,
 				A884C9962888F6AD00E30F86 /* ContentView.swift */,
+				A884C9A32888F8FA00E30F86 /* View */,
+				A884C9A72888FB9600E30F86 /* Component */,
+				A884C9A42888F8FF00E30F86 /* Model */,
+				A8629A5E2889A47600C52F07 /* Extension */,
+				A884C9B7288942EC00E30F86 /* Config */,
+				A884C9A52888F90600E30F86 /* ViewModel */,
+				A884C9BB288953E500E30F86 /* Mock */,
 				A884C9982888F6AF00E30F86 /* Assets.xcassets */,
 				A884C99D2888F6AF00E30F86 /* MultiThread.entitlements */,
 				A884C99A2888F6AF00E30F86 /* Preview Content */,
@@ -67,6 +120,61 @@
 				A884C99B2888F6AF00E30F86 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		A884C9A32888F8FA00E30F86 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				A884C9BE288963D000E30F86 /* TaskView.swift */,
+				A8A2C6B1288B274E00D75458 /* SettingView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		A884C9A42888F8FF00E30F86 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				A884C9AC28891ACF00E30F86 /* UserTask.swift */,
+				A8629A63288A4E1500C52F07 /* SwiftUIListReorder.swift */,
+				A8A2C6B3288B40A400D75458 /* Database.xcdatamodeld */,
+				A8A2C6B6288B418100D75458 /* EmergencyEntry.swift */,
+				A8A2C6BA288BCF6200D75458 /* ProcessingEntry.swift */,
+				A8A2C6BC288BCF6B00D75458 /* TodoEntry.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		A884C9A52888F90600E30F86 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				A884C9AE28891B4200E30F86 /* MainViewModel.swift */,
+				A8A2C6B8288B41DB00D75458 /* Persistence.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		A884C9A72888FB9600E30F86 /* Component */ = {
+			isa = PBXGroup;
+			children = (
+				A884C9AA28891ABD00E30F86 /* TaskRow.swift */,
+			);
+			path = Component;
+			sourceTree = "<group>";
+		};
+		A884C9B7288942EC00E30F86 /* Config */ = {
+			isa = PBXGroup;
+			children = (
+				A884C9B8288942F300E30F86 /* Config.swift */,
+			);
+			path = Config;
+			sourceTree = "<group>";
+		};
+		A884C9BB288953E500E30F86 /* Mock */ = {
+			isa = PBXGroup;
+			children = (
+				A884C9BC288953F000E30F86 /* Mock.swift */,
+			);
+			path = Mock;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -85,6 +193,9 @@
 			dependencies = (
 			);
 			name = MultiThread;
+			packageProductDependencies = (
+				A884C9B32889217F00E30F86 /* UIComponent */,
+			);
 			productName = MultiThread;
 			productReference = A884C9912888F6AD00E30F86 /* MultiThread.app */;
 			productType = "com.apple.product-type.application";
@@ -113,6 +224,9 @@
 				Base,
 			);
 			mainGroup = A884C9882888F6AD00E30F86;
+			packageReferences = (
+				A884C9B22889217F00E30F86 /* XCRemoteSwiftPackageReference "UIComponent" */,
+			);
 			productRefGroup = A884C9922888F6AD00E30F86 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -139,8 +253,24 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A8A2C6B5288B40A400D75458 /* Database.xcdatamodeld in Sources */,
+				A8A2C6B9288B41DB00D75458 /* Persistence.swift in Sources */,
+				A8629A602889A48800C52F07 /* NSTableView.swift in Sources */,
 				A884C9972888F6AD00E30F86 /* ContentView.swift in Sources */,
+				A8629A64288A4E1500C52F07 /* SwiftUIListReorder.swift in Sources */,
 				A884C9952888F6AD00E30F86 /* MultiThreadApp.swift in Sources */,
+				A8A2C6B2288B274E00D75458 /* SettingView.swift in Sources */,
+				A8629A622889AC3800C52F07 /* Color.swift in Sources */,
+				A8A2C6BD288BCF6B00D75458 /* TodoEntry.swift in Sources */,
+				A8A2C6B0288B1FE800D75458 /* NSTextView.swift in Sources */,
+				A884C9BF288963D000E30F86 /* TaskView.swift in Sources */,
+				A884C9AD28891ACF00E30F86 /* UserTask.swift in Sources */,
+				A8A2C6B7288B418100D75458 /* EmergencyEntry.swift in Sources */,
+				A8A2C6BB288BCF6200D75458 /* ProcessingEntry.swift in Sources */,
+				A884C9AB28891ABD00E30F86 /* TaskRow.swift in Sources */,
+				A884C9AF28891B4200E30F86 /* MainViewModel.swift in Sources */,
+				A884C9BD288953F000E30F86 /* Mock.swift in Sources */,
+				A884C9B9288942F300E30F86 /* Config.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -197,7 +327,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 12.3;
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -251,7 +381,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 12.3;
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = macosx;
@@ -274,6 +404,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = MultiThread/Info.plist;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -301,6 +432,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = MultiThread/Info.plist;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -336,6 +468,38 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		A884C9B22889217F00E30F86 /* XCRemoteSwiftPackageReference "UIComponent" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/yanun0323/UIComponent.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		A884C9B32889217F00E30F86 /* UIComponent */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A884C9B22889217F00E30F86 /* XCRemoteSwiftPackageReference "UIComponent" */;
+			productName = UIComponent;
+		};
+/* End XCSwiftPackageProductDependency section */
+
+/* Begin XCVersionGroup section */
+		A8A2C6B3288B40A400D75458 /* Database.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				A8A2C6B4288B40A400D75458 /* Database.xcdatamodel */,
+			);
+			currentVersion = A8A2C6B4288B40A400D75458 /* Database.xcdatamodel */;
+			path = Database.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = A884C9892888F6AD00E30F86 /* Project object */;
 }
