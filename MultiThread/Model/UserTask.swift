@@ -8,9 +8,8 @@
 import Foundation
 import SwiftUI
 
-final class UserTask: NSObject, IUserTask, Codable {
+final class UserTask: NSObject, Identifiable, Codable {
     var id: UUID = UUID()
-    var index: Int64 = 0
     var title: String = ""
     var note: String = ""
     var other: String = ""

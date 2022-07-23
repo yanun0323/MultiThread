@@ -53,7 +53,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
     private var statusItem: NSStatusItem?
     private var popOver = NSPopover()
     private let persistenceController = PersistenceController.shared
-    private var mainViewModel = MainViewModel()
+    private var mainViewModel = Mock.mainViewModel
     
     @MainActor func applicationDidFinishLaunching(_ notification: Notification) {
         mainViewModel.PopOver = popOver
