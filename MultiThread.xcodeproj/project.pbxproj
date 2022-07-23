@@ -28,6 +28,7 @@
 		A8A2C6B9288B41DB00D75458 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8A2C6B8288B41DB00D75458 /* Persistence.swift */; };
 		A8A2C6BB288BCF6200D75458 /* ProcessingEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8A2C6BA288BCF6200D75458 /* ProcessingEntry.swift */; };
 		A8A2C6BD288BCF6B00D75458 /* TodoEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8A2C6BC288BCF6B00D75458 /* TodoEntry.swift */; };
+		F695A63A288C89D5002D11C5 /* IUserTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = F695A639288C89D5002D11C5 /* IUserTask.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -54,6 +55,7 @@
 		A8A2C6B8288B41DB00D75458 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		A8A2C6BA288BCF6200D75458 /* ProcessingEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProcessingEntry.swift; sourceTree = "<group>"; };
 		A8A2C6BC288BCF6B00D75458 /* TodoEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoEntry.swift; sourceTree = "<group>"; };
+		F695A639288C89D5002D11C5 /* IUserTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IUserTask.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,6 +104,7 @@
 				A884C9962888F6AD00E30F86 /* ContentView.swift */,
 				A884C9A32888F8FA00E30F86 /* View */,
 				A884C9A72888FB9600E30F86 /* Component */,
+				F695A63B288C8A5D002D11C5 /* Domain */,
 				A884C9A42888F8FF00E30F86 /* Model */,
 				A8629A5E2889A47600C52F07 /* Extension */,
 				A884C9B7288942EC00E30F86 /* Config */,
@@ -175,6 +178,14 @@
 				A884C9BC288953F000E30F86 /* Mock.swift */,
 			);
 			path = Mock;
+			sourceTree = "<group>";
+		};
+		F695A63B288C8A5D002D11C5 /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+				F695A639288C89D5002D11C5 /* IUserTask.swift */,
+			);
+			path = Domain;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -266,6 +277,7 @@
 				A884C9BF288963D000E30F86 /* TaskView.swift in Sources */,
 				A884C9AD28891ACF00E30F86 /* UserTask.swift in Sources */,
 				A8A2C6B7288B418100D75458 /* EmergencyEntry.swift in Sources */,
+				F695A63A288C89D5002D11C5 /* IUserTask.swift in Sources */,
 				A8A2C6BB288BCF6200D75458 /* ProcessingEntry.swift in Sources */,
 				A884C9AB28891ABD00E30F86 /* TaskRow.swift in Sources */,
 				A884C9AF28891B4200E30F86 /* MainViewModel.swift in Sources */,
