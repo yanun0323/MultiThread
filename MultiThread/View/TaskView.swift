@@ -131,7 +131,7 @@ extension TaskView {
                     other: task.other,
                     color: mainColor)
                 .onDrag {
-                    return NSItemProvider(object: SwiftUIListReorder(task, taskList))
+                    return NSItemProvider(object: SwiftUIListReorder(task))
                 } preview: {
                     HStack {
                         Rectangle()
@@ -194,22 +194,22 @@ extension TaskView {
                         && index >= taskList.count{
                         destination = taskList.count - 1
                     }
-                    withAnimation(Config.Animation.Default) {
-                        guard let removed = mainViewModel.RemoveFromTask(id: recoder.userTask.id) else {
-                            return
+                    
+                guard let removed = mainViewModel.RemoveFromTask(id: recoder.userTask.id) else {
+                    return
+                }
+                if taskList.isEmpty {
+                    DispatchQueue.main.async {
+                        taskList.append(removed)
+                        taskList = taskList
                     }
-                    if taskList.isEmpty {
-                        DispatchQueue.main.async {
-                            taskList.append(removed)
-                            taskList = taskList
-                        }
-                    } else {
-                        DispatchQueue.main.async {
-                            taskList.insert(removed, at: destination)
-                            taskList = taskList
-                        }
+                } else {
+                    DispatchQueue.main.async {
+                        taskList.insert(removed, at: destination)
+                        taskList = taskList
                     }
                 }
+                
             }
         }
     }

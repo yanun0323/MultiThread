@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-final class SwiftUIListReorder: NSObject, NSItemProviderReading, NSItemProviderWriting, Codable, ObservableObject {
+final class SwiftUIListReorder: NSObject, NSItemProviderReading, NSItemProviderWriting, Codable {
     static var readableTypeIdentifiersForItemProvider: [String] = ["com.apple.SwiftUI.listReorder"]
     static func object(withItemProviderData data: Data, typeIdentifier: String) throws -> SwiftUIListReorder {
         let decoder = JSONDecoder()
@@ -29,30 +29,28 @@ final class SwiftUIListReorder: NSObject, NSItemProviderReading, NSItemProviderW
         return nil
     }
     
-    @Published var userTask: UserTask
-    @Published var source: [UserTask]
-    init(_ values: UserTask, _ source: [UserTask]) {
+    var userTask: UserTask
+    init(_ values: UserTask) {
         self.userTask = values
-        self.source = source
     }
     
-    enum CodingKeys: CodingKey {
-        case userTask, source
-    }
-    
-    func encode(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: CodingKeys.self)
-        
-        try container.encode(userTask, forKey: .userTask)
-        try container.encode(source, forKey: .source)
-    }
-    
-    required init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        
-        userTask = try container.decode(UserTask.self, forKey: .userTask)
-        source = try container.decode([UserTask].self, forKey: .source)
-    }
+//    enum CodingKeys: CodingKey {
+//        case userTask, source
+//    }
+//
+//    func encode(to encoder: Encoder) throws {
+//        var container = encoder.container(keyedBy: CodingKeys.self)
+//
+//        try container.encode(userTask, forKey: .userTask)
+//        try container.encode(source, forKey: .source)
+//    }
+//
+//    required init(from decoder: Decoder) throws {
+//        let container = try decoder.container(keyedBy: CodingKeys.self)
+//
+//        userTask = try container.decode(UserTask.self, forKey: .userTask)
+//        source = try container.decode([UserTask].self, forKey: .source)
+//    }
     
 }
 
