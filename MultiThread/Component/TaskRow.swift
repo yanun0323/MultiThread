@@ -14,11 +14,9 @@ struct TaskRow: View {
     @Environment(\.openURL) private var openURL
     @Binding var userTask: UserTask
     @State var color: Color
+    @State var input: UserTask = UserTask(title: "")
     @State private var detail = false
     @State private var linked = false
-    @State private var title = ""
-    @State private var note = ""
-    @State private var other = ""
     
     var body: some View {
         HStack(spacing: 0) {
@@ -39,11 +37,19 @@ struct TaskRow: View {
         .lineLimit(1)
         .truncationMode(.tail)
         .background(.background)
+        .onChange(of: input.title) { _ in
+            userTask.title = input.title
+        }
+        .onChange(of: input.note) { _ in
+            userTask.note = input.note
+            linked = IsLink(input.note)
+        }
+        .onChange(of: input.other) { _ in
+            userTask.other = input.other
+        }
         .onAppear {
-            title = userTask.title
-            note = userTask.note
-            other = userTask.other
-            linked = IsLink(note)
+            input = userTask
+            linked = IsLink(input.note)
         }
     }
 }
@@ -55,13 +61,13 @@ extension TaskRow {
         HStack(spacing: 0) {
             Block(width: 5)
             
-            TextField("輸入標題...", text: $title)
+            TextField("輸入標題...", text: $input.title)
                 .font(.system(size: 14, weight: .light, design: .default))
                 .lineLimit(1)
                 .textFieldStyle(.plain)
                 .onSubmit {
                     print("OnSubmit")
-                    userTask.title = title
+                    userTask.title = input.title
                 }
             
             Spacer()
@@ -96,7 +102,7 @@ extension TaskRow {
                 .padding(.trailing, 5)
             }
 
-            TextField("輸入備註...", text: $note)
+            TextField("輸入備註...", text: $input.note)
                 .foregroundColor(.primary75)
                 .font(.system(size: 10, weight: .thin, design: .default))
                 .frame(height: 10)
@@ -104,7 +110,7 @@ extension TaskRow {
                 .textFieldStyle(.plain)
                 .onSubmit {
                     print("OnSubmit")
-                    userTask.note = note
+                    userTask.note = input.note
                     linked = IsLink(userTask.note)
                 }
         }
@@ -118,16 +124,16 @@ extension TaskRow {
             })
             .popover(isPresented: $detail, arrowEdge: .trailing) {
                 ZStack {
-                    TextEditor(text: $other)
+                    TextEditor(text: $input.other)
                         .font(.system(size: 14, weight: .thin, design: .default))
                         .background(.clear)
                         .frame(width: mainViewModel.Setting.PopoverWidth,
-                               height: CGFloat((other.filter { $0 == "\n" }.count+1) * (14+3)),
+                               height: CGFloat((input.other.filter { $0 == "\n" }.count+1) * (14+3)),
                                alignment: .leading)
-                        .onChange(of: other) { value in
-                            userTask.other = value
-                            print("OnChange - \(userTask.other)")
-                        }
+//                        .onChange(of: other) { value in
+//                            userTask.other = value
+//                            print("OnChange - \(userTask.other)")
+//                        }
                 }
                 .padding(.vertical, 10)
                 .padding(.horizontal)

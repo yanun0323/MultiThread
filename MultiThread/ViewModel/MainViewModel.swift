@@ -14,10 +14,10 @@ class MainViewModel: ObservableObject {
     @Published public var Setting = UserSetting()
 }
 
-struct UserTaskCollection {
-    public var Emergency: [UserTask] = []
-    public var Processing: [UserTask] = []
-    public var Todo: [UserTask] = []
+class UserTaskCollection: ObservableObject {
+    @Published public var Emergency: [UserTask] = []
+    @Published public var Processing: [UserTask] = []
+    @Published public var Todo: [UserTask] = []
 }
 
 struct UserTaskHistory {
