@@ -55,7 +55,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
     private let persistenceController = PersistenceController.shared
     private var mainViewModel = Mock.mainViewModel
     
-    @MainActor func applicationDidFinishLaunching(_ notification: Notification) {
+    func applicationDidFinishLaunching(_ notification: Notification) {
         mainViewModel.PopOver = popOver
         popOver.setValue(true, forKeyPath: "shouldHideAnchor")
         popOver.contentSize = CGSize(width: 350, height: 500)

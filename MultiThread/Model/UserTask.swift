@@ -15,7 +15,7 @@ final class UserTask: NSObject, ObservableObject, Identifiable, Codable {
     @Published var other: String = ""
     @Published var deadline: Date? = nil
     
-    init(title: String, note: String = "", ohter: String = "", deadline: Date? = nil) {
+    init(title: String = "", note: String = "", ohter: String = "", deadline: Date? = nil) {
         self.id = UUID()
         self.title = title
         self.note = note

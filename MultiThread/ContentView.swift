@@ -18,6 +18,31 @@ struct ContentView: View {
             HStack {
                 SettingButton
                 Spacer()
+                ButtonCustom(width: 40, height: 30) {
+                    for task in mainViewModel.Task.Emergency {
+                        print("-------Emergency----------")
+                        print(task.title)
+                        print(task.note)
+                        print(task.other)
+                    }
+                
+                    for task in mainViewModel.Task.Processing {
+                        print("-------Processing----------")
+                        print(task.title)
+                        print(task.note)
+                        print(task.other)
+                    }
+                    
+                    for task in mainViewModel.Task.Todo {
+                        print("-------Todo----------")
+                        print(task.title)
+                        print(task.note)
+                        print(task.other)
+                    }
+                } content: {
+                    Text("Debug")
+                }
+
                 ShotdownButton
             }
             .padding(5)
@@ -34,8 +59,18 @@ struct ContentView: View {
                     .transition(.opacity)
             }
             
-            
             Spacer()
+            Text("Receiver")
+                .foregroundColor(.background)
+//                .onReceive(mainViewModel.Task.$Emergency) { ouput in
+//                    mainViewModel.Task.Emergency = ouput
+//                }
+//                .onReceive(mainViewModel.Task.$Processing) { ouput in
+//                    mainViewModel.Task.Processing = ouput
+//                }
+//                .onReceive(mainViewModel.Task.$Todo) { ouput in
+//                    mainViewModel.Task.Todo = ouput
+//                }
         }
         .background(.background)
     }

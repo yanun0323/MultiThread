@@ -56,10 +56,17 @@ struct UserSetting {
 // MARK: Function
 extension MainViewModel {
     
-    func RemoveFromTask(id: UUID) {
-        Task.Emergency.removeAll(where: {$0.id == id})
-        Task.Processing.removeAll(where: {$0.id == id})
-        Task.Todo.removeAll(where: {$0.id == id})
+    func RemoveFromTask(id: UUID) -> UserTask? {
+        if let index = Task.Emergency.firstIndex(where: { $0.id == id }) {
+            return Task.Emergency.remove(at: index)
+        }
+        if let index = Task.Processing.firstIndex(where: { $0.id == id }) {
+            return Task.Processing.remove(at: index)
+        }
+        if let index = Task.Todo.firstIndex(where: { $0.id == id }) {
+            return Task.Todo.remove(at: index)
+        }
+        return nil
     }
     
 }

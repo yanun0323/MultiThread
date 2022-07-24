@@ -9,12 +9,16 @@ import Foundation
 import SwiftUI
 import UIComponent
 
+@MainActor
 struct TaskRow: View {
     @EnvironmentObject private var mainViewModel: MainViewModel
     @Environment(\.openURL) private var openURL
     @Binding var userTask: UserTask
+    @State var title: String
+    @State var note: String
+    @State var other: String
+
     @State var color: Color
-    @State var input: UserTask = UserTask(title: "")
     @State private var detail = false
     @State private var linked = false
     
@@ -37,20 +41,6 @@ struct TaskRow: View {
         .lineLimit(1)
         .truncationMode(.tail)
         .background(.background)
-        .onChange(of: input.title) { _ in
-            userTask.title = input.title
-        }
-        .onChange(of: input.note) { _ in
-            userTask.note = input.note
-            linked = IsLink(input.note)
-        }
-        .onChange(of: input.other) { _ in
-            userTask.other = input.other
-        }
-        .onAppear {
-            input = userTask
-            linked = IsLink(input.note)
-        }
     }
 }
 
@@ -61,14 +51,19 @@ extension TaskRow {
         HStack(spacing: 0) {
             Block(width: 5)
             
-            TextField("輸入標題...", text: $input.title)
+            TextField("輸入標題...", text: Binding(
+                get: {
+                    title
+                }, set: { value in
+                    print("\(value.count) - \(value)")
+                    if userTask.title != value {
+                        userTask.title = value
+                        print("Changed!")
+                    }
+                }))
                 .font(.system(size: 14, weight: .light, design: .default))
                 .lineLimit(1)
                 .textFieldStyle(.plain)
-                .onSubmit {
-                    print("OnSubmit")
-                    userTask.title = input.title
-                }
             
             Spacer()
         }
@@ -102,17 +97,22 @@ extension TaskRow {
                 .padding(.trailing, 5)
             }
 
-            TextField("輸入備註...", text: $input.note)
+            TextField("輸入備註...", text: Binding(
+                get: {
+                    note
+                }, set: { value in
+                    print("\(value.count) - \(value)")
+                    if userTask.note != value {
+                        userTask.note = value
+                        linked = IsLink(value)
+                        print("Changed!")
+                    }
+                }))
                 .foregroundColor(.primary75)
                 .font(.system(size: 10, weight: .thin, design: .default))
                 .frame(height: 10)
                 .lineLimit(1)
                 .textFieldStyle(.plain)
-                .onSubmit {
-                    print("OnSubmit")
-                    userTask.note = input.note
-                    linked = IsLink(userTask.note)
-                }
         }
     }
     
@@ -124,23 +124,25 @@ extension TaskRow {
             })
             .popover(isPresented: $detail, arrowEdge: .trailing) {
                 ZStack {
-                    TextEditor(text: $input.other)
+                    TextEditor(text: Binding(
+                        get: {
+                            other
+                        }, set: { value in
+                            other = value
+                            print("\(value.count) - \(value)")
+                            if userTask.other != value {
+                                userTask.other = value
+                                print("Changed!")
+                            }
+                        }))
                         .font(.system(size: 14, weight: .thin, design: .default))
                         .background(.clear)
                         .frame(width: mainViewModel.Setting.PopoverWidth,
-                               height: CGFloat((input.other.filter { $0 == "\n" }.count+1) * (14+3)),
+                               height: CGFloat((other.filter { $0 == "\n" }.count+1) * (14+3)),
                                alignment: .leading)
-//                        .onChange(of: other) { value in
-//                            userTask.other = value
-//                            print("OnChange - \(userTask.other)")
-//                        }
                 }
                 .padding(.vertical, 10)
                 .padding(.horizontal)
-//                .onDisappear {
-//                    print("OnDisappear")
-//                    userTask.other = other
-//                }
             }
     }
 }
@@ -155,15 +157,27 @@ extension TaskRow {
 
 struct TaskRow_Previews: PreviewProvider {
     static var previews: some View {
-        TaskRow(userTask: .constant(Mock.mainViewModel.Task.Todo[0]), color: .blue)
+        TaskRow(userTask: .constant(Mock.mainViewModel.Task.Todo[0]),
+                title: Mock.mainViewModel.Task.Todo[0].title,
+                note: Mock.mainViewModel.Task.Todo[0].note,
+                other: Mock.mainViewModel.Task.Todo[0].other,
+                color: .blue)
             .frame(width: 350)
             .preferredColorScheme(.light)
         
-        TaskRow(userTask: .constant(Mock.mainViewModel.Task.Todo[2]), color: .blue)
+        TaskRow(userTask: .constant(Mock.mainViewModel.Task.Todo[2]),
+                title: Mock.mainViewModel.Task.Todo[0].title,
+                note: Mock.mainViewModel.Task.Todo[0].note,
+                other: Mock.mainViewModel.Task.Todo[0].other,
+                color: .blue)
             .frame(width: 350)
             .preferredColorScheme(.light)
             
-        TaskRow(userTask: .constant(Mock.mainViewModel.Task.Todo[0]), color: .blue)
+        TaskRow(userTask: .constant(Mock.mainViewModel.Task.Todo[0]),
+                title: Mock.mainViewModel.Task.Todo[0].title,
+                note: Mock.mainViewModel.Task.Todo[0].note,
+                other: Mock.mainViewModel.Task.Todo[0].other,
+                color: .blue)
             .frame(width: 350)
             .preferredColorScheme(.dark)
     }

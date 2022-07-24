@@ -88,13 +88,11 @@ extension TaskView {
         ZStack {
             if hovered {
                 CreateButton {
-                    withAnimation(Config.Animation.Default) {
-                        taskList.append(UserTask(title: ""))
-                    }
+                    CreateAction()
                 }
                 .transition(.opacity)
             } else {
-                CountButton()
+                CountBlock
                     .transition(.opacity)
             }
         }
@@ -116,20 +114,22 @@ extension TaskView {
         }
     }
     
-    func CountButton() -> some View {
-        ButtonCustom(width: 25, action: {}) {
-            Text("\(taskList.count)")
-                .foregroundColor(mainColor)
-                .font(.title2)
-                .fontWeight(.thin)
-                .frame(width: 25)
-                .lineLimit(1)
-        }
+    var CountBlock: some View {
+        Text("\(taskList.count)")
+            .foregroundColor(mainColor)
+            .font(.title2)
+            .fontWeight(.thin)
+            .frame(width: 25)
+            .lineLimit(1)
     }
     
     var ListExistBlock: some DynamicViewContent {
         ForEach(taskList) { task in
-            TaskRow(userTask: .constant(task), color: mainColor)
+            TaskRow(userTask: .constant(task),
+                    title: task.title,
+                    note: task.note,
+                    other: task.other,
+                    color: mainColor)
                 .onDrag {
                     return NSItemProvider(object: SwiftUIListReorder(task, taskList))
                 } preview: {
@@ -141,18 +141,15 @@ extension TaskView {
                             .font(.body)
                             .fontWeight(.light)
                         Spacer()
-                        VStack(spacing: 0) {
-                            Text(task.deadline?.String("MM / dd EE") ?? "")
-                                .font(.body)
-                                .fontWeight(.light)
-                                .foregroundColor(.primary50)
-                        }
                     }
+                    .background(.background)
                 }
                 .contextMenu {
                     Button("刪除") {
                         withAnimation(Config.Animation.Default) {
-                            taskList.removeAll(where: { $0.id == task.id })
+                            DispatchQueue.main.async {
+                                taskList.removeAll(where: { $0.id == task.id })
+                            }
                         }
                     }
                 }
@@ -177,6 +174,14 @@ extension TaskView {
 // MARK: Function
 extension TaskView {
     
+    func CreateAction() {
+        withAnimation(Config.Animation.Default) {
+            DispatchQueue.main.async {
+                taskList.append(UserTask())
+            }
+        }
+    }
+    
     func InserAction(_ index: Int, _ providers: [NSItemProvider]) -> Void {
         for item in providers {
             item.loadObject(ofClass: SwiftUIListReorder.self) { recoder, error in
@@ -184,53 +189,30 @@ extension TaskView {
                     print(error)
                 }
                 guard let recoder = recoder as? SwiftUIListReorder else { return }
-                DispatchQueue.main.async {
                     var destination = index
                     if taskList.contains(where: { $0.id == recoder.userTask.id })
                         && index >= taskList.count{
                         destination = taskList.count - 1
                     }
                     withAnimation(Config.Animation.Default) {
-                        mainViewModel.RemoveFromTask(id: recoder.userTask.id)
-                        if taskList.isEmpty {
-                            taskList.append(recoder.userTask)
-                        } else {
-                            taskList.insert(recoder.userTask, at: destination)
+                        guard let removed = mainViewModel.RemoveFromTask(id: recoder.userTask.id) else {
+                            return
+                    }
+                    if taskList.isEmpty {
+                        DispatchQueue.main.async {
+                            taskList.append(removed)
+                            taskList = taskList
+                        }
+                    } else {
+                        DispatchQueue.main.async {
+                            taskList.insert(removed, at: destination)
+                            taskList = taskList
                         }
                     }
                 }
             }
         }
     }
-    
-//    func addItem() {
-//        let newData = UserTask(context: context)
-//        newData.Style = input.Style
-//        newData.name = input.Name
-//        newData.content = input.Content
-//        newData.order = input.Order
-//        
-//        do {
-//            try context.save()
-//        } catch {
-//            print(error)
-//        }
-//        
-//        input = UserButton()
-//    }
-//    
-//    func deleteTask(index: Int) {
-//        let itemToDelete = buttons[index]
-//        context.delete(itemToDelete)
-//        
-//        DispatchQueue.main.async {
-//            do{
-//                try context.save()
-//            } catch {
-//                print(error)
-//            }
-//        }
-//    }
     
 }
 
