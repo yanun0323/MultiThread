@@ -25,29 +25,25 @@ struct UserTaskHistory {
 }
 
 struct UserSetting {
-    
-    static private let popoverWidthKey = "PopoverWidth"
-    static private let popoverKeepKey = "PopoverKeep"
-    private var popoverWidth: CGFloat = CGFloat(UserDefaults.standard.integer(forKey: popoverWidthKey))
-    private var popoverKeep: Bool = UserDefaults.standard.bool(forKey: popoverKeepKey)
-    
+    private var popoverWidth: CGFloat = CGFloat(UserDefaults.standard.integer(forKey: "PopoverWidth"))
     var PopoverWidth: CGFloat {
         get {
             return popoverWidth == 0 ? 200 : popoverWidth
         }
         set {
             self.popoverWidth = newValue
-            UserDefaults.standard.set(popoverWidth, forKey: UserSetting.popoverWidthKey)
+            UserDefaults.standard.set(popoverWidth, forKey: "PopoverWidth")
         }
     }
     
+    private var popoverKeep: Bool = UserDefaults.standard.bool(forKey: "PopoverKeep")
     var PopoverKeep: Bool {
         get {
             return popoverKeep
         }
         set {
             self.popoverKeep = newValue
-            UserDefaults.standard.set(popoverKeep, forKey: UserSetting.popoverKeepKey)
+            UserDefaults.standard.set(popoverKeep, forKey: "PopoverKeep")
         }
     }
     
@@ -69,4 +65,17 @@ extension MainViewModel {
         return nil
     }
     
+}
+
+extension UserDefaults {
+    static var Emergency: [UserTask] {
+        get {
+            print("UserDefaults Get")
+            
+            return []
+        }
+        set {
+            print("UserDefaults Set")
+        }
+    }
 }

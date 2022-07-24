@@ -8,6 +8,8 @@
 import SwiftUI
 import UIComponent
 
+let VERSION = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? ""
+
 struct ContentView: View {
     @EnvironmentObject private var mainViewModel: MainViewModel
     @State private var page: Int = 0
@@ -18,31 +20,11 @@ struct ContentView: View {
             HStack {
                 SettingButton
                 Spacer()
-                ButtonCustom(width: 40, height: 30) {
-                    for task in mainViewModel.Task.Emergency {
-                        print("-------Emergency----------")
-                        print(task.title)
-                        print(task.note)
-                        print(task.other)
-                    }
-                
-                    for task in mainViewModel.Task.Processing {
-                        print("-------Processing----------")
-                        print(task.title)
-                        print(task.note)
-                        print(task.other)
-                    }
-                    
-                    for task in mainViewModel.Task.Todo {
-                        print("-------Todo----------")
-                        print(task.title)
-                        print(task.note)
-                        print(task.other)
-                    }
-                } content: {
-                    Text("Debug")
-                }
-
+                Text(VERSION)
+                    .font(.system(size: 14, weight: .light, design: .default))
+                    .foregroundColor(.primary25)
+                    .monospacedDigit()
+                Spacer()
                 ShotdownButton
             }
             .padding(5)
@@ -60,17 +42,6 @@ struct ContentView: View {
             }
             
             Spacer()
-            Text("Receiver")
-                .foregroundColor(.background)
-//                .onReceive(mainViewModel.Task.$Emergency) { ouput in
-//                    mainViewModel.Task.Emergency = ouput
-//                }
-//                .onReceive(mainViewModel.Task.$Processing) { ouput in
-//                    mainViewModel.Task.Processing = ouput
-//                }
-//                .onReceive(mainViewModel.Task.$Todo) { ouput in
-//                    mainViewModel.Task.Todo = ouput
-//                }
         }
         .background(.background)
     }
