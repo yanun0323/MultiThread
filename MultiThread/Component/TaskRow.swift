@@ -59,8 +59,9 @@ extension TaskRow {
                 .font(.system(size: 14, weight: .light, design: .default))
                 .lineLimit(1)
                 .textFieldStyle(.plain)
-                .onChange(of: title) { value in
-                    userTask.title = value
+                .onSubmit {
+                    print("OnSubmit")
+                    userTask.title = title
                 }
             
             Spacer()
@@ -101,11 +102,8 @@ extension TaskRow {
                 .frame(height: 10)
                 .lineLimit(1)
                 .textFieldStyle(.plain)
-                .onChange(of: note, perform: { value in
-                    userTask.note = value
-                    linked = IsLink(value)
-                })
                 .onSubmit {
+                    print("OnSubmit")
                     userTask.note = note
                     linked = IsLink(userTask.note)
                 }
@@ -128,10 +126,15 @@ extension TaskRow {
                                alignment: .leading)
                         .onChange(of: other) { value in
                             userTask.other = value
+                            print("OnChange - \(userTask.other)")
                         }
                 }
                 .padding(.vertical, 10)
                 .padding(.horizontal)
+//                .onDisappear {
+//                    print("OnDisappear")
+//                    userTask.other = other
+//                }
             }
     }
 }
