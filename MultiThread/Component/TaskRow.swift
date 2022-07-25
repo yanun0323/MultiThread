@@ -22,6 +22,8 @@ struct TaskRow: View {
     @State private var detail = false
     @State private var linked = false
     
+    @Binding var trigger: Int
+    
     var body: some View {
         HStack(spacing: 0) {
             Rectangle()
@@ -33,14 +35,16 @@ struct TaskRow: View {
                 TitleRowBlock
                 NoteRowBlock
             }
-            Block(width: 10)
-            
+            Block(width: 5)
             PopoverTrigerBlock
         }
         .frame(height: 30)
         .lineLimit(1)
         .truncationMode(.tail)
         .background(.background)
+        .onAppear {
+            linked = IsLink(note)
+        }
     }
 }
 
@@ -55,9 +59,9 @@ extension TaskRow {
                 get: {
                     title
                 }, set: { value in
-                    print("\(value.count) - \(value)")
                     if userTask.title != value {
                         userTask.title = value
+                        trigger = (trigger+1)%10
                         print("Changed!")
                     }
                 }))
@@ -101,10 +105,10 @@ extension TaskRow {
                 get: {
                     note
                 }, set: { value in
-                    print("\(value.count) - \(value)")
                     if userTask.note != value {
                         userTask.note = value
                         linked = IsLink(value)
+                        trigger = (trigger+1)%10
                         print("Changed!")
                     }
                 }))
@@ -117,8 +121,9 @@ extension TaskRow {
     }
     
     var PopoverTrigerBlock: some View {
-        Image(systemName: "chevron.right")
-            .opacity(0.5)
+        Image(systemName: other.isEmpty ?  "bubble.right" : "bubble.right.fill")
+            .foregroundColor( .primary50.opacity(0.75))
+            .padding([.leading, .vertical], 5)
             .onHover(perform: { value in
                 detail = mainViewModel.Setting.PopoverKeep ? true : value
             })
@@ -129,9 +134,9 @@ extension TaskRow {
                             other
                         }, set: { value in
                             other = value
-                            print("\(value.count) - \(value)")
                             if userTask.other != value {
                                 userTask.other = value
+                                trigger = (trigger+1)%10
                                 print("Changed!")
                             }
                         }))
@@ -161,7 +166,7 @@ struct TaskRow_Previews: PreviewProvider {
                 title: Mock.mainViewModel.Task.Todo[0].title,
                 note: Mock.mainViewModel.Task.Todo[0].note,
                 other: Mock.mainViewModel.Task.Todo[0].other,
-                color: .blue)
+                color: .blue, trigger: .constant(0))
             .frame(width: 350)
             .preferredColorScheme(.light)
         
@@ -169,7 +174,7 @@ struct TaskRow_Previews: PreviewProvider {
                 title: Mock.mainViewModel.Task.Todo[0].title,
                 note: Mock.mainViewModel.Task.Todo[0].note,
                 other: Mock.mainViewModel.Task.Todo[0].other,
-                color: .blue)
+                color: .blue, trigger: .constant(0))
             .frame(width: 350)
             .preferredColorScheme(.light)
             
@@ -177,7 +182,7 @@ struct TaskRow_Previews: PreviewProvider {
                 title: Mock.mainViewModel.Task.Todo[0].title,
                 note: Mock.mainViewModel.Task.Todo[0].note,
                 other: Mock.mainViewModel.Task.Todo[0].other,
-                color: .blue)
+                color: .blue, trigger: .constant(0))
             .frame(width: 350)
             .preferredColorScheme(.dark)
     }

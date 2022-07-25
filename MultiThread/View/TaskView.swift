@@ -15,7 +15,10 @@ struct TaskView: View {
     @Binding var taskList: [UserTask]
     @State var title: String
     @State var mainColor: Color
+    @State var type: TaskType
     @State private var hovered: Bool = false
+    
+    @State private var DatabaseTaskRowTrigger: Int = 0
     
     @FetchRequest(sortDescriptors: [ SortDescriptor(\.index) ])
     private var emergencyEntry: FetchedResults<EmergencyEntry>
@@ -32,7 +35,11 @@ struct TaskView: View {
             TaskListBlock
         }
         .padding(5)
+        .onAppear {
+            RefreshFromDatabase()
+        }
     }
+    
 }
 
 // MARK: View Block
@@ -129,7 +136,8 @@ extension TaskView {
                     title: task.title,
                     note: task.note,
                     other: task.other,
-                    color: mainColor)
+                    color: mainColor,
+                    trigger: $DatabaseTaskRowTrigger)
                 .onDrag {
                     return NSItemProvider(object: SwiftUIListReorder(task))
                 } preview: {
@@ -149,8 +157,15 @@ extension TaskView {
                         withAnimation(Config.Animation.Default) {
                             DispatchQueue.main.async {
                                 taskList.removeAll(where: { $0.id == task.id })
+                                DeleteFromDatabase(task)
                             }
                         }
+                    }
+                }
+                .onChange(of: DatabaseTaskRowTrigger) { _ in
+                    print("onChange - task")
+                    DispatchQueue.main.async {
+                        UpdateDatabase()
                     }
                 }
         }
@@ -177,7 +192,9 @@ extension TaskView {
     func CreateAction() {
         withAnimation(Config.Animation.Default) {
             DispatchQueue.main.async {
-                taskList.append(UserTask())
+                let newTask = UserTask()
+                taskList.append(newTask)
+                CreateDatabaseFrom(newTask)
             }
         }
     }
@@ -195,23 +212,201 @@ extension TaskView {
                         destination = taskList.count - 1
                     }
                     
-                guard let removed = mainViewModel.RemoveFromTask(id: recoder.userTask.id) else {
+                guard let removed = RemoveFromTask(id: recoder.userTask.id) else {
                     return
                 }
+                
                 if taskList.isEmpty {
                     DispatchQueue.main.async {
                         taskList.append(removed)
-                        taskList = taskList
+                        CreateDatabaseFrom(removed)
+                        UpdateDatabase()
                     }
                 } else {
                     DispatchQueue.main.async {
                         taskList.insert(removed, at: destination)
-                        taskList = taskList
+                        CreateDatabaseFrom(removed)
+                        UpdateDatabase()
                     }
                 }
                 
             }
         }
+    }
+    
+    func GenUserTaskFrom(_ entries: FetchedResults<EmergencyEntry>) -> [UserTask] {
+        var result: [UserTask] = []
+        for entry in entries {
+            let userTask = UserTask()
+            userTask.id = entry.id
+            userTask.title = entry.title
+            userTask.note = entry.note
+            userTask.other = entry.other
+            userTask.deadline = entry.deadline
+            result.append(userTask)
+        }
+        return result
+    }
+    
+    func GenUserTaskFrom(_ entries: FetchedResults<ProcessingEntry>) -> [UserTask] {
+        var result: [UserTask] = []
+        for entry in entries {
+            let userTask = UserTask()
+            userTask.id = entry.id
+            userTask.title = entry.title
+            userTask.note = entry.note
+            userTask.other = entry.other
+            userTask.deadline = entry.deadline
+            result.append(userTask)
+        }
+        return result
+    }
+    
+    func GenUserTaskFrom(_ entries: FetchedResults<TodoEntry>) -> [UserTask] {
+        var result: [UserTask] = []
+        for entry in entries {
+            let userTask = UserTask()
+            userTask.id = entry.id
+            userTask.title = entry.title
+            userTask.note = entry.note
+            userTask.other = entry.other
+            userTask.deadline = entry.deadline
+            result.append(userTask)
+        }
+        return result
+    }
+    
+    func RefreshFromDatabase() {
+        mainViewModel.Task.Emergency = GenUserTaskFrom(emergencyEntry)
+        mainViewModel.Task.Processing = GenUserTaskFrom(processingEntry)
+        mainViewModel.Task.Todo = GenUserTaskFrom(todoEntry)
+        print("Done! - RefreshFromDatabase")
+    }
+    
+    func DeleteFromDatabase(_ userTask: UserTask) {
+        print("Start - DeleteFromDatabase")
+        do{
+            for entry in emergencyEntry {
+                if entry.id != userTask.id { continue }
+                context.delete(entry)
+                try context.save()
+                print("Saved! - DeleteFromDatabase")
+                return
+            }
+            for entry in processingEntry {
+                if entry.id != userTask.id { continue }
+                context.delete(entry)
+                try context.save()
+                print("Saved! - DeleteFromDatabase")
+                return
+            }
+            for entry in todoEntry {
+                if entry.id != userTask.id { continue }
+                context.delete(entry)
+                try context.save()
+                print("Saved! - DeleteFromDatabase")
+                return
+            }
+            
+            print("Not Save! - DeleteFromDatabase")
+        } catch {
+            print(error)
+        }
+    }
+    
+    func UpdateDatabase() {
+        
+        for index in 0 ..< emergencyEntry.count {
+            let task = mainViewModel.Task.Emergency[index]
+            let entry = emergencyEntry[index]
+            entry.index = Int64(index)
+            entry.id = task.id
+            entry.title = task.title
+            entry.note = task.note
+            entry.other = task.other
+            entry.deadline = task.deadline
+        }
+        
+        for index in 0 ..< processingEntry.count {
+            let task = mainViewModel.Task.Processing[index]
+            let entry = processingEntry[index]
+            entry.index = Int64(index)
+            entry.id = task.id
+            entry.title = task.title
+            entry.note = task.note
+            entry.other = task.other
+            entry.deadline = task.deadline
+        }
+        
+        for index in 0 ..< todoEntry.count {
+            let task = mainViewModel.Task.Todo[index]
+            let entry = todoEntry[index]
+            entry.index = Int64(index)
+            entry.id = task.id
+            entry.title = task.title
+            entry.note = task.note
+            entry.other = task.other
+            entry.deadline = task.deadline
+        }
+        
+        do {
+            try context.save()
+            print("Saved! - UpdateDatabase")
+        } catch {
+            print(error)
+        }
+    }
+    
+    func CreateDatabaseFrom(_ userTask: UserTask) {
+        switch type {
+        case .Emergency:
+            let newItem = EmergencyEntry(context: context)
+            newItem.index = Int64(emergencyEntry.count)
+            newItem.id = userTask.id
+            newItem.title = userTask.title
+            newItem.note = userTask.note
+            newItem.other = userTask.other
+            newItem.deadline = userTask.deadline
+        case .Processing:
+            let newItem = ProcessingEntry(context: context)
+            newItem.index = Int64(processingEntry.count)
+            newItem.id = userTask.id
+            newItem.title = userTask.title
+            newItem.note = userTask.note
+            newItem.other = userTask.other
+            newItem.deadline = userTask.deadline
+        case .Todo:
+            let newItem = TodoEntry(context: context)
+            newItem.index = Int64(todoEntry.count)
+            newItem.id = userTask.id
+            newItem.title = userTask.title
+            newItem.note = userTask.note
+            newItem.other = userTask.other
+            newItem.deadline = userTask.deadline
+        }
+        
+        do {
+            try context.save()
+            print("Saved! - CreateDatabaseFrom")
+        } catch {
+            print(error)
+        }
+    }
+    
+    func RemoveFromTask(id: UUID) -> UserTask? {
+        if let index = mainViewModel.Task.Emergency.firstIndex(where: { $0.id == id }) {
+            DeleteFromDatabase(mainViewModel.Task.Emergency[index])
+            return mainViewModel.Task.Emergency.remove(at: index)
+        }
+        if let index = mainViewModel.Task.Processing.firstIndex(where: { $0.id == id }) {
+            DeleteFromDatabase(mainViewModel.Task.Processing[index])
+            return mainViewModel.Task.Processing.remove(at: index)
+        }
+        if let index = mainViewModel.Task.Todo.firstIndex(where: { $0.id == id }) {
+            DeleteFromDatabase(mainViewModel.Task.Todo[index])
+            return mainViewModel.Task.Todo.remove(at: index)
+        }
+        return nil
     }
     
 }
@@ -220,26 +415,30 @@ struct TaskView_Previews: PreviewProvider {
     static var previews: some View {
         TaskView(taskList: .constant(Mock.mainViewModel.Task.Emergency),
                  title: Config.Task.Emergency.Title,
-                 mainColor: Config.Task.Emergency.Color)
+                 mainColor: Config.Task.Emergency.Color
+                 ,type: .Emergency)
             .frame(width: 350,height: 150)
             .background(.background)
         
         
         TaskView(taskList: .constant(Mock.mainViewModel.Task.Processing),
                  title: Config.Task.Processing.Title,
-                 mainColor: Config.Task.Processing.Color)
+                 mainColor: Config.Task.Processing.Color
+                 ,type: .Processing)
             .frame(width: 350,height: 150)
             .background(.background)
     
         TaskView(taskList: .constant([]),
                  title: Config.Task.Todo.Title,
-                 mainColor: Config.Task.Todo.Color)
+                 mainColor: Config.Task.Todo.Color
+                 ,type: .Todo)
             .frame(width: 350,height: 150)
             .background(.background)
         
         TaskView(taskList: .constant(Mock.mainViewModel.Task.Emergency),
                  title: Config.Task.Emergency.Title,
-                 mainColor: Config.Task.Emergency.Color)
+                 mainColor: Config.Task.Emergency.Color
+                 ,type: .Emergency)
             .frame(width: 350,height: 150)
             .background(.background)
             .preferredColorScheme(.dark)
@@ -247,14 +446,16 @@ struct TaskView_Previews: PreviewProvider {
         
         TaskView(taskList: .constant(Mock.mainViewModel.Task.Processing),
                  title: Config.Task.Processing.Title,
-                 mainColor: Config.Task.Processing.Color)
+                 mainColor: Config.Task.Processing.Color
+                 ,type: .Processing)
             .frame(width: 350,height: 150)
             .background(.background)
             .preferredColorScheme(.dark)
     
         TaskView(taskList: .constant([]),
                  title: Config.Task.Todo.Title,
-                 mainColor: Config.Task.Todo.Color)
+                 mainColor: Config.Task.Todo.Color
+                 ,type: .Todo)
             .frame(width: 350,height: 150)
             .background(.background)
             .preferredColorScheme(.dark)

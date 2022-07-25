@@ -83,7 +83,8 @@ extension ContentView {
             
             TaskView(taskList: $mainViewModel.Task.Emergency,
                      title: Config.Task.Emergency.Title,
-                     mainColor: Config.Task.Emergency.Color)
+                     mainColor: Config.Task.Emergency.Color,
+                     type: .Emergency)
             
             Separator(direction: .horizontal, color: .primary25, size: 1)
                 .blur(radius: 0.2)
@@ -91,7 +92,8 @@ extension ContentView {
             
             TaskView(taskList: $mainViewModel.Task.Processing,
                      title: Config.Task.Processing.Title,
-                     mainColor: Config.Task.Processing.Color)
+                     mainColor: Config.Task.Processing.Color,
+                     type: .Processing)
             
             Separator(direction: .horizontal, color: .primary25, size: 1)
                 .blur(radius: 0.2)
@@ -99,7 +101,8 @@ extension ContentView {
             
             TaskView(taskList: $mainViewModel.Task.Todo,
                      title: Config.Task.Todo.Title,
-                     mainColor: Config.Task.Todo.Color)
+                     mainColor: Config.Task.Todo.Color,
+                     type: .Todo)
         }
     }
     

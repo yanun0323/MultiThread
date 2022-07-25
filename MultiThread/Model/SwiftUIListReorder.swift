@@ -34,24 +34,6 @@ final class SwiftUIListReorder: NSObject, NSItemProviderReading, NSItemProviderW
         self.userTask = values
     }
     
-//    enum CodingKeys: CodingKey {
-//        case userTask, source
-//    }
-//
-//    func encode(to encoder: Encoder) throws {
-//        var container = encoder.container(keyedBy: CodingKeys.self)
-//
-//        try container.encode(userTask, forKey: .userTask)
-//        try container.encode(source, forKey: .source)
-//    }
-//
-//    required init(from decoder: Decoder) throws {
-//        let container = try decoder.container(keyedBy: CodingKeys.self)
-//
-//        userTask = try container.decode(UserTask.self, forKey: .userTask)
-//        source = try container.decode([UserTask].self, forKey: .source)
-//    }
-    
 }
 
 //struct SwiftUIListReorderDropDelegate: DropDelegate {

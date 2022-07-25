@@ -7,11 +7,16 @@
 
 import Foundation
 import AppKit
+import CoreData
 
 class MainViewModel: ObservableObject {
     @Published var PopOver = NSPopover()
     @Published public var Task = UserTaskCollection()
     @Published public var Setting = UserSetting()
+}
+
+enum TaskType {
+    case Emergency, Processing, Todo
 }
 
 class UserTaskCollection: ObservableObject {
@@ -51,20 +56,6 @@ struct UserSetting {
 
 // MARK: Function
 extension MainViewModel {
-    
-    func RemoveFromTask(id: UUID) -> UserTask? {
-        if let index = Task.Emergency.firstIndex(where: { $0.id == id }) {
-            return Task.Emergency.remove(at: index)
-        }
-        if let index = Task.Processing.firstIndex(where: { $0.id == id }) {
-            return Task.Processing.remove(at: index)
-        }
-        if let index = Task.Todo.firstIndex(where: { $0.id == id }) {
-            return Task.Todo.remove(at: index)
-        }
-        return nil
-    }
-    
 }
 
 extension UserDefaults {
