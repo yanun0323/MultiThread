@@ -68,9 +68,6 @@ extension TaskView {
                 .transition(.opacity)
                 .listStyle(.plain)
                 .background(.clear)
-                .onTapGesture {
-                    print("Tap List")
-                }
             } else {
                 List {
                     ListExistBlock
@@ -80,15 +77,9 @@ extension TaskView {
                 .transition(.opacity)
                 .listStyle(.plain)
                 .background(.clear)
-                .onTapGesture {
-                    print("Tap List")
-                }
             }
         }
-        .transition(.opacity)
-        .onTapGesture {
-            print("Tap ZStack")
-        }
+        .animation(Config.Animation.Default, value: taskList.count)
     }
     
     var CountAndCreaterBlock: some View {
@@ -163,7 +154,9 @@ extension TaskView {
                     }
                 }
                 .onChange(of: DatabaseTaskRowTrigger) { _ in
+                    #if DEBUG
                     print("onChange - task")
+                    #endif
                     DispatchQueue.main.async {
                         UpdateDatabase()
                     }
@@ -280,35 +273,46 @@ extension TaskView {
         mainViewModel.Task.Emergency = GenUserTaskFrom(emergencyEntry)
         mainViewModel.Task.Processing = GenUserTaskFrom(processingEntry)
         mainViewModel.Task.Todo = GenUserTaskFrom(todoEntry)
+        #if DEBUG
         print("Done! - RefreshFromDatabase")
+        #endif
     }
     
     func DeleteFromDatabase(_ userTask: UserTask) {
+        #if DEBUG
         print("Start - DeleteFromDatabase")
+        #endif
         do{
             for entry in emergencyEntry {
                 if entry.id != userTask.id { continue }
                 context.delete(entry)
                 try context.save()
+                #if DEBUG
                 print("Saved! - DeleteFromDatabase")
+                #endif
                 return
             }
             for entry in processingEntry {
                 if entry.id != userTask.id { continue }
                 context.delete(entry)
                 try context.save()
+                #if DEBUG
                 print("Saved! - DeleteFromDatabase")
+                #endif
                 return
             }
             for entry in todoEntry {
                 if entry.id != userTask.id { continue }
                 context.delete(entry)
                 try context.save()
+                #if DEBUG
                 print("Saved! - DeleteFromDatabase")
+                #endif
                 return
             }
-            
+            #if DEBUG
             print("Not Save! - DeleteFromDatabase")
+            #endif
         } catch {
             print(error)
         }
@@ -351,7 +355,9 @@ extension TaskView {
         
         do {
             try context.save()
+            #if DEBUG
             print("Saved! - UpdateDatabase")
+            #endif
         } catch {
             print(error)
         }
@@ -387,7 +393,9 @@ extension TaskView {
         
         do {
             try context.save()
+            #if DEBUG
             print("Saved! - CreateDatabaseFrom")
+            #endif
         } catch {
             print(error)
         }

@@ -8,8 +8,6 @@
 import SwiftUI
 import UIComponent
 
-let VERSION = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? ""
-
 struct ContentView: View {
     @EnvironmentObject private var mainViewModel: MainViewModel
     @State private var page: Int = 0
@@ -20,9 +18,10 @@ struct ContentView: View {
             HStack {
                 SettingButton
                 Spacer()
-                Text(VERSION)
+                Text("MultiThread")
                     .font(.system(size: 14, weight: .light, design: .default))
                     .foregroundColor(.primary25)
+                    .kerning(1)
                     .monospacedDigit()
                 Spacer()
                 ShotdownButton
@@ -52,7 +51,7 @@ struct ContentView: View {
 extension ContentView {
     
     var ShotdownButton: some View {
-        ButtonCustom(width: 35, height: 20, color: .red.opacity(0.9), radius: 5, style: .blank) {
+        ButtonCustom(width: 35, height: 20, color: .red.opacity(0.9), radius: 4, style: .blank) {
             NSApplication.shared.terminate(self)
         } content: {
             Image(systemName: "power")
@@ -63,7 +62,7 @@ extension ContentView {
     }
     
     var SettingButton: some View {
-        ButtonCustom(width: 35, height: 20, color: .clear, radius: 5, border: 0) {
+        ButtonCustom(width: 23, height: 20, color: .clear, radius: 5, border: 0) {
             withAnimation(Config.Animation.Default) {
                 page = page == -1 ? 0 : -1
             }

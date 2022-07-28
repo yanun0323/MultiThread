@@ -73,6 +73,58 @@ struct UserSetting {
             UserDefaults.standard.set(windowsHeight, forKey: "WindowsHeight")
         }
     }
+    
+    private var appearance: Int = UserDefaults.standard.integer(forKey: "Theme")
+    
+    /**
+    User stored appearance
+     
+     0 : system
+     
+     1 : light
+     
+     2 : dark
+     */
+    var AppearanceInt: Int {
+        get {
+            appearance
+        }
+    }
+    
+    var Appearance: NSAppearance? {
+        get {
+            switch appearance {
+            case 1:
+                return NSAppearance(named: .aqua)
+            case 2:
+                return NSAppearance(named: .darkAqua)
+            default:
+                return nil
+            }
+        }
+        set {
+            switch newValue {
+            case NSAppearance(named: .aqua):
+                self.appearance = 1
+                #if DEBUG
+                print("Set Light Mode")
+                #endif
+            case NSAppearance(named: .darkAqua):
+                self.appearance = 2
+                #if DEBUG
+                print("Set Light Mode")
+                #endif
+            default:
+                self.appearance = 0
+                #if DEBUG
+                print("Set Light Mode")
+                #endif
+            }
+            UserDefaults.standard.set(appearance, forKey: "Theme")
+        }
+    }
+    
+    
 }
 
 // MARK: Function
@@ -82,12 +134,16 @@ extension MainViewModel {
 extension UserDefaults {
     static var Emergency: [UserTask] {
         get {
+            #if DEBUG
             print("UserDefaults Get")
+            #endif
             
             return []
         }
         set {
+            #if DEBUG
             print("UserDefaults Set")
+            #endif
         }
     }
 }

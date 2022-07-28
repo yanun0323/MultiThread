@@ -62,7 +62,9 @@ extension TaskRow {
                     if userTask.title != value {
                         userTask.title = value
                         trigger = (trigger+1)%10
+                        #if DEBUG
                         print("Changed!")
+                        #endif
                     }
                 }))
                 .font(.system(size: 14, weight: .light, design: .default))
@@ -109,7 +111,9 @@ extension TaskRow {
                         userTask.note = value
                         linked = IsLink(value)
                         trigger = (trigger+1)%10
+                        #if DEBUG
                         print("Changed!")
+                        #endif
                     }
                 }))
                 .foregroundColor(.primary75)
@@ -121,7 +125,7 @@ extension TaskRow {
     }
     
     var PopoverTrigerBlock: some View {
-        Image(systemName: other.isEmpty ?  "bubble.right" : "bubble.right.fill")
+        Image(systemName: other.isEmpty ?  "bubble.middle.bottom" : "bubble.middle.bottom.fill")
             .foregroundColor( .primary50.opacity(0.75))
             .padding([.leading, .vertical], 5)
             .onHover(perform: { value in
@@ -137,7 +141,9 @@ extension TaskRow {
                             if userTask.other != value {
                                 userTask.other = value
                                 trigger = (trigger+1)%10
+                                #if DEBUG
                                 print("Changed!")
+                                #endif
                             }
                         }))
                         .font(.system(size: 14, weight: .thin, design: .default))

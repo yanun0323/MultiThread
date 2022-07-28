@@ -398,7 +398,7 @@
 				CODE_SIGN_ENTITLEMENTS = MultiThread/MultiThread.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = "Develop by Yanun Yang";
+				CURRENT_PROJECT_VERSION = 2022.07.29;
 				DEVELOPMENT_ASSET_PATHS = "\"MultiThread/Preview Content\"";
 				DEVELOPMENT_TEAM = Y366CJ66L6;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -411,7 +411,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 0.1.5;
+				MARKETING_VERSION = 0.2.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.yanunyang.MultiThread;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -427,7 +427,7 @@
 				CODE_SIGN_ENTITLEMENTS = MultiThread/MultiThread.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = "Develop by Yanun Yang";
+				CURRENT_PROJECT_VERSION = 2022.07.29;
 				DEVELOPMENT_ASSET_PATHS = "\"MultiThread/Preview Content\"";
 				DEVELOPMENT_TEAM = Y366CJ66L6;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -440,7 +440,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 0.1.5;
+				MARKETING_VERSION = 0.2.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.yanunyang.MultiThread;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;

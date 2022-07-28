@@ -56,6 +56,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
     private var mainViewModel = MainViewModel()
     
     func applicationDidFinishLaunching(_ notification: Notification) {
+        
+        NSApp.appearance = mainViewModel.Setting.Appearance
+        
         mainViewModel.PopOver = popOver
         popOver.setValue(true, forKeyPath: "shouldHideAnchor")
         popOver.contentSize = CGSize(width: mainViewModel.Setting.WindowsWidth,
