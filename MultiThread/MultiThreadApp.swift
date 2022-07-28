@@ -58,7 +58,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
     func applicationDidFinishLaunching(_ notification: Notification) {
         mainViewModel.PopOver = popOver
         popOver.setValue(true, forKeyPath: "shouldHideAnchor")
-        popOver.contentSize = CGSize(width: 350, height: 500)
+        popOver.contentSize = CGSize(width: mainViewModel.Setting.WindowsWidth,
+                                     height: mainViewModel.Setting.WindowsHeight)
         popOver.behavior = .transient
         popOver.animates = true
         popOver.contentViewController = NSViewController()
@@ -76,7 +77,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
     
     @objc func togglePopover() {
         if let button = statusItem?.button {
-            self.popOver.show(relativeTo: button.frame, of: button, preferredEdge: NSRectEdge.maxY)
+            self.popOver.show(relativeTo:  button.bounds, of: button, preferredEdge: NSRectEdge.minY)
         }
         
     }

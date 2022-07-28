@@ -52,6 +52,27 @@ struct UserSetting {
         }
     }
     
+    private var windowsWidth: Int = UserDefaults.standard.integer(forKey: "WindowsWidth")
+    var WindowsWidth: Int {
+        get {
+            return windowsWidth == 0 ? 350 : windowsWidth
+        }
+        set {
+            self.windowsWidth = newValue
+            UserDefaults.standard.set(windowsWidth, forKey: "WindowsWidth")
+        }
+    }
+    
+    private var windowsHeight: Int = UserDefaults.standard.integer(forKey: "WindowsHeight")
+    var WindowsHeight: Int {
+        get {
+            return windowsHeight == 0 ? 800 : windowsHeight
+        }
+        set {
+            self.windowsHeight = newValue
+            UserDefaults.standard.set(windowsHeight, forKey: "WindowsHeight")
+        }
+    }
 }
 
 // MARK: Function
