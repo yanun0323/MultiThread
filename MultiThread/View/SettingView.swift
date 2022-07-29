@@ -78,12 +78,12 @@ extension SettingView {
                     Image(systemName: "macwindow.on.rectangle")
                         .font(.title)
                         .padding(5)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 5)
-                                .stroke(Color.accentColor, style: StrokeStyle(lineWidth: 1.5))
-                                .opacity(appearance == 0 ? 1 : 0)
-                        )
                 }
+                .overlay(
+                    RoundedRectangle(cornerRadius: 5)
+                        .stroke(Color.accentColor, style: StrokeStyle(lineWidth: 1.5))
+                        .opacity(appearance == 0 ? 1 : 0)
+                )
                 Text("系統")
             }
             
@@ -98,12 +98,12 @@ extension SettingView {
                     Image(systemName: "sun.max")
                         .font(.title)
                         .padding(5)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 5)
-                                .stroke(Color.accentColor, style: StrokeStyle(lineWidth: 1.5))
-                                .opacity(appearance == 1 ? 1 : 0)
-                    )
                 }
+                .overlay(
+                    RoundedRectangle(cornerRadius: 5)
+                        .stroke(Color.accentColor, style: StrokeStyle(lineWidth: 1.5))
+                        .opacity(appearance == 1 ? 1 : 0)
+            )
                 Text("淺色")
             }
             
@@ -118,12 +118,12 @@ extension SettingView {
                     Image(systemName: "moon")
                         .font(.title)
                         .padding(5)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 5)
-                                .stroke(Color.accentColor, style: StrokeStyle(lineWidth: 1.5))
-                                .opacity(appearance == 2 ? 1 : 0)
-                        )
                 }
+                .overlay(
+                    RoundedRectangle(cornerRadius: 5)
+                        .stroke(Color.accentColor, style: StrokeStyle(lineWidth: 1.5))
+                        .opacity(appearance == 2 ? 1 : 0)
+                )
                 Text("深色")
             }
             Spacer()
