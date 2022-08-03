@@ -78,8 +78,11 @@ class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
         var img = NSImage(named: "multithread.fill")
         #endif
         
+        img = NSImage(named: "multithread.fill")
         var config = NSImage.SymbolConfiguration(textStyle: .body, scale: .large)
-//        config = config.applying(.init(paletteColors: [.darkGray]))
+        config = config.applying(.init(paletteColors: [
+            .init(red: 0, green: 0.5, blue: 1, alpha: 1),
+            .init(red: 0.9, green: 0.2, blue: 0.2, alpha: 1)]))
         img = img?.withSymbolConfiguration(config)
         
         if let statusButton = statusItem?.button {
