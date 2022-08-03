@@ -148,7 +148,7 @@ extension TaskRow {
                         }))
                         .font(.system(size: 14, weight: .thin, design: .default))
                         .background(.clear)
-                        .frame(width: mainViewModel.Setting.PopoverWidth,
+                        .frame(width: CGFloat(mainViewModel.Setting.PopoverWidth),
                                height: CGFloat((other.filter { $0 == "\n" }.count+1) * (14+3)),
                                alignment: .leading)
                 }
@@ -168,28 +168,37 @@ extension TaskRow {
 
 struct TaskRow_Previews: PreviewProvider {
     static var previews: some View {
-        TaskRow(userTask: .constant(Mock.mainViewModel.Task.Todo[0]),
-                title: Mock.mainViewModel.Task.Todo[0].title,
-                note: Mock.mainViewModel.Task.Todo[0].note,
-                other: Mock.mainViewModel.Task.Todo[0].other,
-                color: .blue, trigger: .constant(0))
-            .frame(width: 350)
-            .preferredColorScheme(.light)
+        VStack {
+            Row(Config.Task.Block)
+            Row(Config.Task.Emergency)
+            Row(Config.Task.Processing)
+            Row(Config.Task.Todo)
+        }
+        .frame(width: 300)
+        .padding()
+        .preferredColorScheme(.light)
+        .background(.background)
         
-        TaskRow(userTask: .constant(Mock.mainViewModel.Task.Todo[2]),
-                title: Mock.mainViewModel.Task.Todo[0].title,
-                note: Mock.mainViewModel.Task.Todo[0].note,
-                other: Mock.mainViewModel.Task.Todo[0].other,
-                color: .blue, trigger: .constant(0))
-            .frame(width: 350)
-            .preferredColorScheme(.light)
-            
-        TaskRow(userTask: .constant(Mock.mainViewModel.Task.Todo[0]),
-                title: Mock.mainViewModel.Task.Todo[0].title,
-                note: Mock.mainViewModel.Task.Todo[0].note,
-                other: Mock.mainViewModel.Task.Todo[0].other,
-                color: .blue, trigger: .constant(0))
-            .frame(width: 350)
-            .preferredColorScheme(.dark)
+        VStack {
+            Row(Config.Task.Block)
+            Row(Config.Task.Emergency)
+            Row(Config.Task.Processing)
+            Row(Config.Task.Todo)
+        }
+        .frame(width: 300)
+        .padding()
+        .preferredColorScheme(.dark)
+        .background(.background)
+    }
+    
+    @MainActor
+    static func Row(_ set: TaskSettingUnit) -> some View {
+        TaskRow(
+            userTask:.constant(UserTask()),
+            title: "項目名稱",
+            note: "備註內容",
+            other: "",
+            color: set.Color,
+            trigger: .constant(0))
     }
 }

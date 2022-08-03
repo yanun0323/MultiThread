@@ -28,20 +28,11 @@ struct ContentView: View {
             }
             .padding(5)
             
-            switch page {
-            case -1:
-                SettingPage
-                    .transition(.opacity.combined(with: .scale(scale: 0.1, anchor: .topLeading)))
-            case 0:
-                TaskPage
-                    .transition(.opacity)
-            default:
-                TaskPage
-                    .transition(.opacity)
-            }
+            SettingPage
             
             Spacer()
         }
+        .frame(height: mainViewModel.Setting.WindowsHeight)
         .background(.background)
     }
 }
@@ -80,14 +71,27 @@ extension ContentView {
                 .blur(radius: 0.2)
                 .padding(2)
             
-            TaskView(taskList: $mainViewModel.Task.Emergency,
-                     title: Config.Task.Emergency.Title,
-                     mainColor: Config.Task.Emergency.Color,
-                     type: .Emergency)
+            if !mainViewModel.Setting.HideEmergency {
+                TaskView(taskList: $mainViewModel.Task.Emergency,
+                         title: Config.Task.Emergency.Title,
+                         mainColor: Config.Task.Emergency.Color,
+                         type: .Emergency)
+                
+                Separator(direction: .horizontal, color: .primary25, size: 1)
+                    .blur(radius: 0.2)
+                    .padding(2)
+            }
             
-            Separator(direction: .horizontal, color: .primary25, size: 1)
-                .blur(radius: 0.2)
-                .padding(2)
+            if !mainViewModel.Setting.HideBlock {
+                TaskView(taskList: $mainViewModel.Task.Blocked,
+                         title: Config.Task.Block.Title,
+                         mainColor: Config.Task.Block.Color,
+                         type: .Blocked)
+                
+                Separator(direction: .horizontal, color: .primary25, size: 1)
+                    .blur(radius: 0.2)
+                    .padding(2)
+            }
             
             TaskView(taskList: $mainViewModel.Task.Processing,
                      title: Config.Task.Processing.Title,
@@ -106,7 +110,23 @@ extension ContentView {
     }
     
     var SettingPage: some View {
-        SettingView()
+        ZStack {
+            TaskPage
+                .transition(.opacity)
+            VStack {
+                HStack {
+                    ZStack {
+                        if page == -1 {
+                            SettingView()
+                                .transition(.opacity.combined(with: .scale(scale: 0.1, anchor: .topLeading)))
+                        }
+                    }
+                    .background(.background)
+                    Spacer(minLength: 0)
+                }
+                Spacer(minLength: 0)
+            }
+        }
     }
     
 }

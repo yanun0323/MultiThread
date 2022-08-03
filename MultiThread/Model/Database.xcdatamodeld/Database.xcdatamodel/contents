@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="20086" systemVersion="21E258" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="BlockedEntry" representedClassName=".BlockedEntry" syncable="YES">
+        <attribute name="deadline" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="index" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="note" optional="YES" attributeType="String"/>
+        <attribute name="other" optional="YES" attributeType="String"/>
+        <attribute name="title" optional="YES" attributeType="String"/>
+    </entity>
     <entity name="EmergencyEntry" representedClassName=".EmergencyEntry" syncable="YES">
         <attribute name="deadline" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
@@ -26,7 +34,8 @@
     </entity>
     <elements>
         <element name="EmergencyEntry" positionX="-63" positionY="-18" width="128" height="119"/>
-        <element name="TodoEntry" positionX="-54" positionY="27" width="128" height="119"/>
         <element name="ProcessingEntry" positionX="-36" positionY="63" width="128" height="119"/>
+        <element name="TodoEntry" positionX="-54" positionY="27" width="128" height="119"/>
+        <element name="BlockedEntry" positionX="-45" positionY="72" width="128" height="119"/>
     </elements>
 </model>

@@ -28,6 +28,7 @@
 		A8A2C6B9288B41DB00D75458 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8A2C6B8288B41DB00D75458 /* Persistence.swift */; };
 		A8A2C6BB288BCF6200D75458 /* ProcessingEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8A2C6BA288BCF6200D75458 /* ProcessingEntry.swift */; };
 		A8A2C6BD288BCF6B00D75458 /* TodoEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8A2C6BC288BCF6B00D75458 /* TodoEntry.swift */; };
+		A8D2F4C1289A4E7F007952FC /* BlockedEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8D2F4C0289A4E7F007952FC /* BlockedEntry.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -54,6 +55,7 @@
 		A8A2C6B8288B41DB00D75458 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		A8A2C6BA288BCF6200D75458 /* ProcessingEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProcessingEntry.swift; sourceTree = "<group>"; };
 		A8A2C6BC288BCF6B00D75458 /* TodoEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoEntry.swift; sourceTree = "<group>"; };
+		A8D2F4C0289A4E7F007952FC /* BlockedEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockedEntry.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,9 +104,9 @@
 				A884C9962888F6AD00E30F86 /* ContentView.swift */,
 				A884C9A32888F8FA00E30F86 /* View */,
 				A884C9A72888FB9600E30F86 /* Component */,
+				A884C9B7288942EC00E30F86 /* Config */,
 				A884C9A42888F8FF00E30F86 /* Model */,
 				A8629A5E2889A47600C52F07 /* Extension */,
-				A884C9B7288942EC00E30F86 /* Config */,
 				A884C9A52888F90600E30F86 /* ViewModel */,
 				A884C9BB288953E500E30F86 /* Mock */,
 				A884C9982888F6AF00E30F86 /* Assets.xcassets */,
@@ -139,6 +141,7 @@
 				A8A2C6B3288B40A400D75458 /* Database.xcdatamodeld */,
 				A8A2C6B6288B418100D75458 /* EmergencyEntry.swift */,
 				A8A2C6BA288BCF6200D75458 /* ProcessingEntry.swift */,
+				A8D2F4C0289A4E7F007952FC /* BlockedEntry.swift */,
 				A8A2C6BC288BCF6B00D75458 /* TodoEntry.swift */,
 			);
 			path = Model;
@@ -208,7 +211,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1330;
-				LastUpgradeCheck = 1330;
+				LastUpgradeCheck = 1340;
 				TargetAttributes = {
 					A884C9902888F6AD00E30F86 = {
 						CreatedOnToolsVersion = 13.3.1;
@@ -257,6 +260,7 @@
 				A8A2C6B9288B41DB00D75458 /* Persistence.swift in Sources */,
 				A8629A602889A48800C52F07 /* NSTableView.swift in Sources */,
 				A884C9972888F6AD00E30F86 /* ContentView.swift in Sources */,
+				A8D2F4C1289A4E7F007952FC /* BlockedEntry.swift in Sources */,
 				A8629A64288A4E1500C52F07 /* SwiftUIListReorder.swift in Sources */,
 				A884C9952888F6AD00E30F86 /* MultiThreadApp.swift in Sources */,
 				A8A2C6B2288B274E00D75458 /* SettingView.swift in Sources */,
@@ -396,9 +400,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = MultiThread/MultiThread.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1M23Y;
+				CURRENT_PROJECT_VERSION = 2M02Y;
 				DEVELOPMENT_ASSET_PATHS = "\"MultiThread/Preview Content\"";
 				DEVELOPMENT_TEAM = Y366CJ66L6;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -411,7 +416,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 0.2.3;
+				MARKETING_VERSION = 1.0.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.yanunyang.MultiThread;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -425,9 +430,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = MultiThread/MultiThread.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1M23Y;
+				CURRENT_PROJECT_VERSION = 2M02Y;
 				DEVELOPMENT_ASSET_PATHS = "\"MultiThread/Preview Content\"";
 				DEVELOPMENT_TEAM = Y366CJ66L6;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -440,7 +446,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 0.2.3;
+				MARKETING_VERSION = 1.0.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.yanunyang.MultiThread;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;

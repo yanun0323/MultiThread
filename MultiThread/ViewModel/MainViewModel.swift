@@ -16,13 +16,14 @@ class MainViewModel: ObservableObject {
 }
 
 enum TaskType {
-    case Emergency, Processing, Todo
+    case Emergency, Processing, Todo, Blocked
 }
 
 class UserTaskCollection: ObservableObject {
     @Published public var Emergency: [UserTask] = []
     @Published public var Processing: [UserTask] = []
     @Published public var Todo: [UserTask] = []
+    @Published public var Blocked: [UserTask] = []
 }
 
 struct UserTaskHistory {
@@ -30,10 +31,10 @@ struct UserTaskHistory {
 }
 
 struct UserSetting {
-    private var popoverWidth: CGFloat = CGFloat(UserDefaults.standard.integer(forKey: "PopoverWidth"))
-    var PopoverWidth: CGFloat {
+    private var popoverWidth: Double = UserDefaults.standard.double(forKey: "PopoverWidth")
+    var PopoverWidth: Double {
         get {
-            return popoverWidth == 0 ? 200 : popoverWidth
+            return popoverWidth == 0 ? Config.Popover.MinWidth : popoverWidth
         }
         set {
             self.popoverWidth = newValue
@@ -52,10 +53,10 @@ struct UserSetting {
         }
     }
     
-    private var windowsWidth: Int = UserDefaults.standard.integer(forKey: "WindowsWidth")
-    var WindowsWidth: Int {
+    private var windowsWidth: Double = UserDefaults.standard.double(forKey: "WindowsWidth")
+    var WindowsWidth: Double {
         get {
-            return windowsWidth == 0 ? 350 : windowsWidth
+            return windowsWidth == 0 ? Config.Windows.MinWidth : windowsWidth
         }
         set {
             self.windowsWidth = newValue
@@ -63,14 +64,36 @@ struct UserSetting {
         }
     }
     
-    private var windowsHeight: Int = UserDefaults.standard.integer(forKey: "WindowsHeight")
-    var WindowsHeight: Int {
+    private var windowsHeight: Double = UserDefaults.standard.double(forKey: "WindowsHeight")
+    var WindowsHeight: Double {
         get {
-            return windowsHeight == 0 ? 800 : windowsHeight
+            return windowsHeight == 0 ? Config.Windows.MinHeight : windowsHeight
         }
         set {
             self.windowsHeight = newValue
             UserDefaults.standard.set(windowsHeight, forKey: "WindowsHeight")
+        }
+    }
+    
+    private var hideBlock: Bool = UserDefaults.standard.bool(forKey: "HideBlock")
+    var HideBlock: Bool {
+        get {
+            return hideBlock
+        }
+        set {
+            self.hideBlock = newValue
+            UserDefaults.standard.set(hideBlock, forKey: "HideBlock")
+        }
+    }
+    
+    private var hideEmergency: Bool = UserDefaults.standard.bool(forKey: "HideEmergency")
+    var HideEmergency: Bool {
+        get {
+            return hideEmergency
+        }
+        set {
+            self.hideEmergency = newValue
+            UserDefaults.standard.set(hideEmergency, forKey: "HideEmergency")
         }
     }
     

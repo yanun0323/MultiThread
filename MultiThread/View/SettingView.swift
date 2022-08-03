@@ -12,46 +12,50 @@ let VERSION = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? Stri
 
 struct SettingView: View {
     @EnvironmentObject private var mainViewModel: MainViewModel
-    @State private var popoverWidth: Double = 200
-    @State private var windowsWidth: Double = 350
-    @State private var windowsHeight: Double = 800
     @State private var appearance: Int = 0
+    @State private var hideBlock: Bool = false
+    @State private var hideEmergency: Bool = false
+
     
     var body: some View {
         
-        VStack(spacing: 40) {
-            
-            ThemeBlock
-                .padding(.vertical)
-                .background(Color.primary.opacity(0.05))
-                .clipShape(RoundedRectangle(cornerRadius: 10))
-            
-            PopoverWidthBlock
-            
-            VStack(spacing: 0) {
-                WindowWidthBlock
-                WindowHeightBlock
-                Text("＊視窗長寬需重新啟動程式才會生效＊")
-                    .font(.system(size: 11, weight: .light, design: .default))
-                    .foregroundColor(.red)
+        ScrollView(.vertical, showsIndicators: false) {
+            VStack(spacing: 20) {
+                
+                ThemeBlock
+                    .padding(.vertical)
+                    .background(Color.primary.opacity(0.05))
+                    .clipShape(RoundedRectangle(cornerRadius: 10))
+                
+                VStack(spacing: 0) {
+                    WindowWidthBlock
+                    WindowHeightBlock
+                }
+                
+                PopoverWidthBlock
+                
+                HStack {
+                    VStack(spacing: 10) {
+                        HideBlockedBlock
+                        HideEmergencyBlock
+                    }
+                    VStack(spacing: 10) {
+                        PopoverKeepBlock
+                    }
+                }
+                Spacer()
+                VersionBlock
             }
-            
-            PopoverKeepBlock
-            
-            Spacer()
-            
-            Text("Version \(VERSION)")
-                .font(.system(size: 14, weight: .light, design: .default))
-                .foregroundColor(.primary25)
-                .monospacedDigit()
+            .frame(height: mainViewModel.Setting.WindowsHeight - 40)
+            .padding(.horizontal)
+            .onAppear {
+                appearance = mainViewModel.Setting.AppearanceInt
+                hideBlock = mainViewModel.Setting.HideBlock
+                hideEmergency = mainViewModel.Setting.HideEmergency
+            }
         }
-        .padding()
-        .onAppear {
-            popoverWidth = mainViewModel.Setting.PopoverWidth
-            windowsWidth = Double(mainViewModel.Setting.WindowsWidth)
-            windowsHeight = Double(mainViewModel.Setting.WindowsHeight)
-            appearance = mainViewModel.Setting.AppearanceInt
-        }
+        .frame(height: mainViewModel.Setting.WindowsHeight - 40)
+        
     }
 }
 
@@ -134,11 +138,13 @@ extension SettingView {
     var PopoverWidthBlock: some View {
         HStack(spacing: 10) {
             Text("備註寬度")
-            Text("\(Int(popoverWidth))")
+            Text("\(Int(mainViewModel.Setting.PopoverWidth))")
                 .monospacedDigit()
-            Slider(value: $popoverWidth, in: 100...500, step: 50) { changed in
-                mainViewModel.Setting.PopoverWidth = popoverWidth
-            }
+            Slider(
+                value: $mainViewModel.Setting.PopoverWidth,
+                in: Config.Popover.MinWidth...Config.Popover.MaxWidth,
+                step: 50
+            )
             .foregroundColor(.accentColor)
             .padding(.horizontal)
         }
@@ -146,8 +152,27 @@ extension SettingView {
     
     var PopoverKeepBlock: some View {
         HStack(spacing: 10) {
-            Text("備註不自動隱藏")
+            Spacer()
             Toggle("", isOn: $mainViewModel.Setting.PopoverKeep)
+            Text("不自動收合備註")
+            Spacer()
+        }
+    }
+    
+    var HideBlockedBlock: some View {
+        HStack(spacing: 10) {
+            Spacer()
+            Toggle("", isOn: $mainViewModel.Setting.HideBlock)
+            Text("隱藏'\(Config.Task.Block.Title)'欄位")
+            Spacer()
+        }
+    }
+    
+    var HideEmergencyBlock: some View {
+        HStack(spacing: 10) {
+            Spacer()
+            Toggle("", isOn: $mainViewModel.Setting.HideEmergency)
+            Text("隱藏'\(Config.Task.Emergency.Title)'欄位")
             Spacer()
         }
     }
@@ -155,10 +180,19 @@ extension SettingView {
     var WindowWidthBlock: some View {
         HStack(spacing: 10) {
             Text("視窗寬度")
-            Text("\(Int(windowsWidth))")
+            Text("\(Int(mainViewModel.Setting.WindowsWidth))")
                 .monospacedDigit()
-            Slider(value: $windowsWidth, in: 350...500, step: 50) { changed in
-                mainViewModel.Setting.WindowsWidth = Int(windowsWidth)
+            Slider(
+                value: $mainViewModel.Setting.WindowsWidth,
+                in: Config.Windows.MinWidth...Config.Windows.MaxWidth,
+                step: 50
+            ) { isEditing in
+                if !isEditing {
+                    mainViewModel.PopOver.contentSize = CGSize(
+                        width: mainViewModel.Setting.WindowsWidth,
+                        height: mainViewModel.Setting.WindowsHeight
+                    )
+                }
             }
             .foregroundColor(.accentColor)
             .padding(.horizontal)
@@ -168,13 +202,47 @@ extension SettingView {
     var WindowHeightBlock: some View {
         HStack(spacing: 10) {
             Text("視窗高度")
-            Text("\(Int(windowsHeight))")
+            Text("\(Int(mainViewModel.Setting.WindowsHeight))")
                 .monospacedDigit()
-            Slider(value: $windowsHeight, in: 400...1000, step: 100) { changed in
-                mainViewModel.Setting.WindowsHeight = Int(windowsHeight)
+            Slider(
+                value: $mainViewModel.Setting.WindowsHeight,
+                in: Config.Windows.MinHeight...Config.Windows.MaxHeight,
+                step: 100
+            ) { isEditing in
+                if !isEditing {
+                    mainViewModel.PopOver.contentSize = CGSize(
+                        width: mainViewModel.Setting.WindowsWidth,
+                        height: mainViewModel.Setting.WindowsHeight
+                    )
+                }
             }
             .foregroundColor(.accentColor)
             .padding(.horizontal)
+        }
+    }
+    
+    var VersionBlock: some View {
+        HStack {
+            Spacer()
+            Image("App")
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(height: 100)
+            Spacer()
+            VStack(alignment: .leading, spacing: 0) {
+                Text("MultiTread")
+                    .foregroundColor(.primary50)
+                    .font(.system(size: 14, weight: .light, design: .default))
+                Text("Develop by Yanun Yang")
+                    .font(.system(size: 10, weight: .light, design: .default))
+                Spacer()
+                Text("Version \(VERSION)")
+                    .font(.system(size: 10, weight: .light, design: .default))
+            }
+            .frame(height: 60)
+            .foregroundColor(.primary25)
+            .monospacedDigit()
+            Spacer()
         }
     }
     
@@ -183,13 +251,19 @@ extension SettingView {
 struct Setting_Previews: PreviewProvider {
     static var previews: some View {
         SettingView()
-            .frame(width: 350, height: 500)
+            .frame(
+                width: CGFloat(MainViewModel().Setting.WindowsWidth),
+                height: CGFloat(MainViewModel().Setting.WindowsHeight)
+            )
             .environmentObject(Mock.mainViewModel)
             .preferredColorScheme(.light)
         
         
         SettingView()
-            .frame(width: 350, height: 500)
+            .frame(
+                width: CGFloat(MainViewModel().Setting.WindowsWidth),
+                height: CGFloat(MainViewModel().Setting.WindowsHeight)
+            )
             .environmentObject(Mock.mainViewModel)
             .preferredColorScheme(.dark)
     }

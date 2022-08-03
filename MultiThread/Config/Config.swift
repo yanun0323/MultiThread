@@ -9,15 +9,29 @@ import CoreGraphics
 import SwiftUI
 
 struct Config {
-    static let TaskViewWidth: CGFloat = 300
+    static let Popover = PopoverSetting()
+    static let Windows = WindowsSetting()
     static let Task = TaskSetting()
     static let Animation = AnimationSet()
 }
 
+struct PopoverSetting {
+    let MinWidth: CGFloat = 100
+    let MaxWidth: CGFloat = 500
+}
+
+struct WindowsSetting {
+    let MinWidth: CGFloat = 350
+    let MaxWidth: CGFloat = 500
+    let MinHeight: CGFloat = 500
+    let MaxHeight: CGFloat = 1000
+}
+
 struct TaskSetting {
     let Emergency = TaskSettingUnit(Title: "緊急", Color: .red)
-    let Processing = TaskSettingUnit(Title: "進行中", Color: .accentColor)
+    let Processing = TaskSettingUnit(Title: "進行", Color: .accentColor)
     let Todo = TaskSettingUnit(Title: "待辦", Color: .gray)
+    let Block = TaskSettingUnit(Title: "中斷", Color: .yellow)
 }
 
 struct TaskSettingUnit {
@@ -33,8 +47,9 @@ struct AnimationSet {
     
 }
 
+
 struct Previews_Config_Previews: PreviewProvider {
     static var previews: some View {
-        /*@START_MENU_TOKEN@*/Text("Hello, World!")/*@END_MENU_TOKEN@*/
+        TaskRow_Previews.previews
     }
 }

@@ -29,6 +29,9 @@ struct TaskView: View {
     @FetchRequest(sortDescriptors: [ SortDescriptor(\.index) ])
     private var todoEntry: FetchedResults<TodoEntry>
     
+    @FetchRequest(sortDescriptors: [ SortDescriptor(\.index) ])
+    private var blockedEntry: FetchedResults<BlockedEntry>
+    
     var body: some View {
         HStack(spacing: 0) {
             LeftbarBlock
@@ -50,6 +53,7 @@ extension TaskView {
                 .font(.title)
                 .fontWeight(.thin)
                 .frame(width: 25)
+                .minimumScaleFactor(1)
             Spacer()
             CountAndCreaterBlock
         }
@@ -269,10 +273,25 @@ extension TaskView {
         return result
     }
     
+    func GenUserTaskFrom(_ entries: FetchedResults<BlockedEntry>) -> [UserTask] {
+        var result: [UserTask] = []
+        for entry in entries {
+            let userTask = UserTask()
+            userTask.id = entry.id
+            userTask.title = entry.title
+            userTask.note = entry.note
+            userTask.other = entry.other
+            userTask.deadline = entry.deadline
+            result.append(userTask)
+        }
+        return result
+    }
+    
     func RefreshFromDatabase() {
         mainViewModel.Task.Emergency = GenUserTaskFrom(emergencyEntry)
         mainViewModel.Task.Processing = GenUserTaskFrom(processingEntry)
         mainViewModel.Task.Todo = GenUserTaskFrom(todoEntry)
+        mainViewModel.Task.Blocked = GenUserTaskFrom(blockedEntry)
         #if DEBUG
         print("Done! - RefreshFromDatabase")
         #endif
@@ -302,6 +321,15 @@ extension TaskView {
                 return
             }
             for entry in todoEntry {
+                if entry.id != userTask.id { continue }
+                context.delete(entry)
+                try context.save()
+                #if DEBUG
+                print("Saved! - DeleteFromDatabase")
+                #endif
+                return
+            }
+            for entry in blockedEntry {
                 if entry.id != userTask.id { continue }
                 context.delete(entry)
                 try context.save()
@@ -353,6 +381,17 @@ extension TaskView {
             entry.deadline = task.deadline
         }
         
+        for index in 0 ..< blockedEntry.count {
+            let task = mainViewModel.Task.Blocked[index]
+            let entry = blockedEntry[index]
+            entry.index = Int64(index)
+            entry.id = task.id
+            entry.title = task.title
+            entry.note = task.note
+            entry.other = task.other
+            entry.deadline = task.deadline
+        }
+        
         do {
             try context.save()
             #if DEBUG
@@ -389,6 +428,14 @@ extension TaskView {
             newItem.note = userTask.note
             newItem.other = userTask.other
             newItem.deadline = userTask.deadline
+        case .Blocked:
+            let newItem = BlockedEntry(context: context)
+            newItem.index = Int64(blockedEntry.count)
+            newItem.id = userTask.id
+            newItem.title = userTask.title
+            newItem.note = userTask.note
+            newItem.other = userTask.other
+            newItem.deadline = userTask.deadline
         }
         
         do {
@@ -414,6 +461,10 @@ extension TaskView {
             DeleteFromDatabase(mainViewModel.Task.Todo[index])
             return mainViewModel.Task.Todo.remove(at: index)
         }
+        if let index = mainViewModel.Task.Blocked.firstIndex(where: { $0.id == id }) {
+            DeleteFromDatabase(mainViewModel.Task.Blocked[index])
+            return mainViewModel.Task.Blocked.remove(at: index)
+        }
         return nil
     }
     
@@ -425,16 +476,18 @@ struct TaskView_Previews: PreviewProvider {
                  title: Config.Task.Emergency.Title,
                  mainColor: Config.Task.Emergency.Color
                  ,type: .Emergency)
-            .frame(width: 350,height: 150)
+            .frame(width: 350,height: 110)
             .background(.background)
+            .environmentObject(MainViewModel())
         
         
         TaskView(taskList: .constant(Mock.mainViewModel.Task.Processing),
                  title: Config.Task.Processing.Title,
                  mainColor: Config.Task.Processing.Color
                  ,type: .Processing)
-            .frame(width: 350,height: 150)
+            .frame(width: 350,height: 110)
             .background(.background)
+            .environmentObject(MainViewModel())
     
         TaskView(taskList: .constant([]),
                  title: Config.Task.Todo.Title,
@@ -442,6 +495,7 @@ struct TaskView_Previews: PreviewProvider {
                  ,type: .Todo)
             .frame(width: 350,height: 150)
             .background(.background)
+            .environmentObject(MainViewModel())
         
         TaskView(taskList: .constant(Mock.mainViewModel.Task.Emergency),
                  title: Config.Task.Emergency.Title,
@@ -450,6 +504,7 @@ struct TaskView_Previews: PreviewProvider {
             .frame(width: 350,height: 150)
             .background(.background)
             .preferredColorScheme(.dark)
+            .environmentObject(MainViewModel())
         
         
         TaskView(taskList: .constant(Mock.mainViewModel.Task.Processing),
@@ -459,6 +514,7 @@ struct TaskView_Previews: PreviewProvider {
             .frame(width: 350,height: 150)
             .background(.background)
             .preferredColorScheme(.dark)
+            .environmentObject(MainViewModel())
     
         TaskView(taskList: .constant([]),
                  title: Config.Task.Todo.Title,
@@ -467,5 +523,6 @@ struct TaskView_Previews: PreviewProvider {
             .frame(width: 350,height: 150)
             .background(.background)
             .preferredColorScheme(.dark)
+            .environmentObject(MainViewModel())
     }
 }

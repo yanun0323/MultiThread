@@ -71,9 +71,19 @@ class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
             .environment(\.managedObjectContext, persistenceController.container.viewContext)
         )
         statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
-          
+        
+        #if DEBUG
+        var img = NSImage(systemSymbolName: "ladybug.fill", accessibilityDescription: nil)
+        #else
+        var img = NSImage(named: "multithread.fill")
+        #endif
+        
+        var config = NSImage.SymbolConfiguration(textStyle: .body, scale: .large)
+//        config = config.applying(.init(paletteColors: [.darkGray]))
+        img = img?.withSymbolConfiguration(config)
+        
         if let statusButton = statusItem?.button {
-            statusButton.image = NSImage(systemSymbolName: "hare.fill", accessibilityDescription: nil)
+            statusButton.image = img
             statusButton.action = #selector(togglePopover)
         }
     }
