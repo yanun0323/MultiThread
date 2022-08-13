@@ -130,29 +130,34 @@ extension TaskRow {
         Image(systemName: other.isEmpty ?  "bubble.middle.bottom" : "bubble.middle.bottom.fill")
             .foregroundColor( .primary50.opacity(0.75))
             .padding([.leading, .vertical], 5)
-            .onTapGesture(perform: {
-                print("onTap")
-                if mainViewModel.Setting.PopoverClick {
-                    detail = true
-                }
-            })
             .onHover(perform: { value in
+                print("onHover")
                 if mainViewModel.page == -1 {
+                    print("page")
                     detail = false
                     return
                 }
                 
                 if mainViewModel.Setting.PopoverClick {
+                    print("PopoverClick")
                     detail = detail
+                    print(detail)
                     return
                 }
                 
                 if mainViewModel.Setting.PopoverKeep {
+                    print("PopoverKeep")
                     detail = true
                     return
                 }
                 
                 detail = value
+            })
+            .onTapGesture(perform: {
+                print("onTap")
+                if mainViewModel.Setting.PopoverClick {
+                    detail = true
+                }
             })
             .popover(isPresented: $detail, arrowEdge: .trailing) {
                 ZStack {

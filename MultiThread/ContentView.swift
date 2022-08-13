@@ -55,6 +55,7 @@ extension ContentView {
         ButtonCustom(width: 23, height: 20, color: .clear, radius: 5, border: 0) {
             withAnimation(Config.Animation.Default) {
                 mainViewModel.page = mainViewModel.page == -1 ? 0 : -1
+                print("page: \(mainViewModel.page)")
             }
         } content: {
             Image(systemName: "gearshape.fill")
@@ -109,21 +110,15 @@ extension ContentView {
     }
     
     var SettingPage: some View {
-        ZStack {
-            TaskPage
-                .transition(.opacity)
-            VStack {
-                HStack {
-                    ZStack {
-                        if mainViewModel.page == -1 {
-                            SettingView()
-                                .transition(.opacity.combined(with: .scale(scale: 0.1, anchor: .topLeading)))
-                        }
-                    }
-                    .background(.background)
-                    Spacer(minLength: 0)
-                }
-                Spacer(minLength: 0)
+        HStack {
+            switch mainViewModel.page {
+                case -1:
+                    SettingView()
+                        .background(.background)
+                        .transition(.opacity.combined(with: .scale(scale: 0.95, anchor: .topLeading)))
+                default:
+                    TaskPage
+                        .transition(.opacity)
             }
         }
     }

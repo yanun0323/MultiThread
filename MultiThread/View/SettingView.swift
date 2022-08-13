@@ -12,9 +12,11 @@ let VERSION = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? Stri
 
 struct SettingView: View {
     @EnvironmentObject private var mainViewModel: MainViewModel
+    @Environment(\.openURL) private var openURL
     @State private var appearance: Int = 0
     @State private var hideBlock: Bool = false
     @State private var hideEmergency: Bool = false
+    @State private var windowWidth: CGFloat = Config.Windows.MinWidth
 
     
     var body: some View {
@@ -31,9 +33,9 @@ struct SettingView: View {
                     WindowWidthBlock
                     WindowHeightBlock
                 }
-                
+
                 PopoverWidthBlock
-                
+
                 HStack {
                     VStack(spacing: 10) {
                         HideBlockedBlock
@@ -55,6 +57,7 @@ struct SettingView: View {
                 appearance = mainViewModel.Setting.AppearanceInt
                 hideBlock = mainViewModel.Setting.HideBlock
                 hideEmergency = mainViewModel.Setting.HideEmergency
+                windowWidth = mainViewModel.Setting.WindowsWidth
             }
         }
         .frame(height: mainViewModel.Setting.WindowsHeight - 40)
@@ -148,6 +151,7 @@ extension SettingView {
                 in: Config.Popover.MinWidth...Config.Popover.MaxWidth,
                 step: 50
             )
+            .frame(width: mainViewModel.Setting.WindowsWidth*0.5)
             .foregroundColor(.accentColor)
             .padding(.horizontal)
         }
@@ -192,20 +196,22 @@ extension SettingView {
     var WindowWidthBlock: some View {
         HStack(spacing: 10) {
             Text("視窗寬度")
-            Text("\(Int(mainViewModel.Setting.WindowsWidth))")
+            Text("\(Int(windowWidth))")
                 .monospacedDigit()
             Slider(
-                value: $mainViewModel.Setting.WindowsWidth,
+                value: $windowWidth,
                 in: Config.Windows.MinWidth...Config.Windows.MaxWidth,
                 step: 50
             ) { isEditing in
                 if !isEditing {
+                    mainViewModel.Setting.WindowsWidth = windowWidth
                     mainViewModel.PopOver.contentSize = CGSize(
                         width: mainViewModel.Setting.WindowsWidth,
                         height: mainViewModel.Setting.WindowsHeight
                     )
                 }
             }
+            .frame(width: mainViewModel.Setting.WindowsWidth*0.5)
             .foregroundColor(.accentColor)
             .padding(.horizontal)
         }
@@ -228,6 +234,7 @@ extension SettingView {
                     )
                 }
             }
+            .frame(width: mainViewModel.Setting.WindowsWidth*0.5)
             .foregroundColor(.accentColor)
             .padding(.horizontal)
         }
@@ -242,9 +249,20 @@ extension SettingView {
                 .frame(height: 100)
             Spacer()
             VStack(alignment: .leading, spacing: 0) {
-                Text("MultiTread")
-                    .foregroundColor(.primary50)
-                    .font(.system(size: 14, weight: .light, design: .default))
+                ButtonCustom(
+                    width: 70, height: 15, style: .linked
+                ) {
+                    let link = "https://www.yanunyang.com/multithread"
+                    guard let component = URLComponents(string: link) else { return }
+                    if let url = component.url {
+                        openURL(url)
+                    }
+                } content: {
+                    Text("MultiTread")
+                        .underline()
+                        .foregroundColor(.blue)
+                        .font(.system(size: 14, weight: .light, design: .default))
+                }
                 Text("Develop by Yanun Yang")
                     .font(.system(size: 10, weight: .light, design: .default))
                 Spacer()
