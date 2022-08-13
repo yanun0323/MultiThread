@@ -40,7 +40,10 @@ struct SettingView: View {
                         HideEmergencyBlock
                     }
                     VStack(spacing: 10) {
+                        PopoverClickBlock
                         PopoverKeepBlock
+                            .foregroundColor(mainViewModel.Setting.PopoverClick ? .primary25 : .primary)
+                            .disabled(mainViewModel.Setting.PopoverClick)
                     }
                 }
                 Spacer()
@@ -147,6 +150,15 @@ extension SettingView {
             )
             .foregroundColor(.accentColor)
             .padding(.horizontal)
+        }
+    }
+    
+    var PopoverClickBlock: some View {
+        HStack(spacing: 10) {
+            Spacer()
+            Toggle("", isOn: $mainViewModel.Setting.PopoverClick)
+            Text("以點擊展開備註")
+            Spacer()
         }
     }
     

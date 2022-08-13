@@ -10,7 +10,6 @@ import UIComponent
 
 struct ContentView: View {
     @EnvironmentObject private var mainViewModel: MainViewModel
-    @State private var page: Int = 0
     
     var body: some View {
         VStack(spacing: 0) {
@@ -55,12 +54,12 @@ extension ContentView {
     var SettingButton: some View {
         ButtonCustom(width: 23, height: 20, color: .clear, radius: 5, border: 0) {
             withAnimation(Config.Animation.Default) {
-                page = page == -1 ? 0 : -1
+                mainViewModel.page = mainViewModel.page == -1 ? 0 : -1
             }
         } content: {
             Image(systemName: "gearshape.fill")
                 .font(.title2)
-                .foregroundColor(page == -1 ? .accentColor : .primary50)
+                .foregroundColor(mainViewModel.page == -1 ? .accentColor : .primary50)
         }
 
     }
@@ -116,7 +115,7 @@ extension ContentView {
             VStack {
                 HStack {
                     ZStack {
-                        if page == -1 {
+                        if mainViewModel.page == -1 {
                             SettingView()
                                 .transition(.opacity.combined(with: .scale(scale: 0.1, anchor: .topLeading)))
                         }

@@ -13,6 +13,7 @@ class MainViewModel: ObservableObject {
     @Published var PopOver = NSPopover()
     @Published public var Task = UserTaskCollection()
     @Published public var Setting = UserSetting()
+    @Published public var page: Int = 0
 }
 
 enum TaskType {
@@ -39,6 +40,17 @@ struct UserSetting {
         set {
             self.popoverWidth = newValue
             UserDefaults.standard.set(popoverWidth, forKey: "PopoverWidth")
+        }
+    }
+    
+    private var popoverClick: Bool = UserDefaults.standard.bool(forKey: "PopoverClick")
+    var PopoverClick: Bool {
+        get {
+            return popoverClick
+        }
+        set {
+            self.popoverClick = newValue
+            UserDefaults.standard.set(popoverClick, forKey: "PopoverClick")
         }
     }
     

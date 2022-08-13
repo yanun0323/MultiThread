@@ -13,7 +13,7 @@ import UIComponent
 struct TaskRow: View {
     @EnvironmentObject private var mainViewModel: MainViewModel
     @Environment(\.openURL) private var openURL
-    @Binding var userTask: UserTask
+    @StateObject var userTask: UserTask
     @State var title: String
     @State var note: String
     @State var other: String
@@ -60,6 +60,7 @@ extension TaskRow {
                     title
                 }, set: { value in
                     if userTask.title != value {
+                        title = value
                         userTask.title = value
                         trigger = (trigger+1)%10
                         #if DEBUG
@@ -108,6 +109,7 @@ extension TaskRow {
                     note
                 }, set: { value in
                     if userTask.note != value {
+                        note = value
                         userTask.note = value
                         linked = IsLink(value)
                         trigger = (trigger+1)%10
@@ -128,8 +130,29 @@ extension TaskRow {
         Image(systemName: other.isEmpty ?  "bubble.middle.bottom" : "bubble.middle.bottom.fill")
             .foregroundColor( .primary50.opacity(0.75))
             .padding([.leading, .vertical], 5)
+            .onTapGesture(perform: {
+                print("onTap")
+                if mainViewModel.Setting.PopoverClick {
+                    detail = true
+                }
+            })
             .onHover(perform: { value in
-                detail = mainViewModel.Setting.PopoverKeep ? true : value
+                if mainViewModel.page == -1 {
+                    detail = false
+                    return
+                }
+                
+                if mainViewModel.Setting.PopoverClick {
+                    detail = detail
+                    return
+                }
+                
+                if mainViewModel.Setting.PopoverKeep {
+                    detail = true
+                    return
+                }
+                
+                detail = value
             })
             .popover(isPresented: $detail, arrowEdge: .trailing) {
                 ZStack {
@@ -194,7 +217,7 @@ struct TaskRow_Previews: PreviewProvider {
     @MainActor
     static func Row(_ set: TaskSettingUnit) -> some View {
         TaskRow(
-            userTask:.constant(UserTask()),
+            userTask: UserTask(),
             title: "項目名稱",
             note: "備註內容",
             other: "",

@@ -127,7 +127,7 @@ extension TaskView {
     
     var ListExistBlock: some DynamicViewContent {
         ForEach(taskList) { task in
-            TaskRow(userTask: .constant(task),
+            TaskRow(userTask: task,
                     title: task.title,
                     note: task.note,
                     other: task.other,
