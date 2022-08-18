@@ -32,6 +32,17 @@ struct UserTaskHistory {
 }
 
 struct UserSetting {
+    private var language: String = UserDefaults.standard.string(forKey: "Language") ?? ""
+    var Language: Locale {
+        get {
+            return language.isEmpty ? Locale.current : .init(identifier: language)
+        }
+        set {
+            self.language = newValue.description
+            UserDefaults.standard.set(language, forKey: "Language")
+        }
+    }
+    
     private var popoverWidth: Double = UserDefaults.standard.double(forKey: "PopoverWidth")
     var PopoverWidth: Double {
         get {
@@ -54,14 +65,14 @@ struct UserSetting {
         }
     }
     
-    private var popoverKeep: Bool = UserDefaults.standard.bool(forKey: "PopoverKeep")
-    var PopoverKeep: Bool {
+    private var popoverAutoClose: Bool = UserDefaults.standard.bool(forKey: "PopoverAutoClose")
+    var PopoverAutoClose: Bool {
         get {
-            return popoverKeep
+            return popoverAutoClose
         }
         set {
-            self.popoverKeep = newValue
-            UserDefaults.standard.set(popoverKeep, forKey: "PopoverKeep")
+            self.popoverAutoClose = newValue
+            UserDefaults.standard.set(popoverAutoClose, forKey: "PopoverAutoClose")
         }
     }
     
@@ -164,6 +175,7 @@ struct UserSetting {
 
 // MARK: Function
 extension MainViewModel {
+    
 }
 
 extension UserDefaults {

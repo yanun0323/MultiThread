@@ -28,10 +28,10 @@ struct WindowsSetting {
 }
 
 struct TaskSetting {
-    let Emergency = TaskSettingUnit(Title: "緊急", Color: .red)
-    let Processing = TaskSettingUnit(Title: "進行", Color: .accentColor)
-    let Todo = TaskSettingUnit(Title: "待辦", Color: .gray)
-    let Block = TaskSettingUnit(Title: "中斷", Color: .yellow)
+    let Emergency = TaskSettingUnit(Title: String(localized: "Urgent"), Color: .red)
+    let Processing = TaskSettingUnit(Title: String(localized: "Processing"), Color: .accentColor)
+    let Todo = TaskSettingUnit(Title: String(localized: "Todo"), Color: .gray)
+    let Block = TaskSettingUnit(Title: String(localized: "Block"), Color: .yellow)
 }
 
 struct TaskSettingUnit {

@@ -55,7 +55,7 @@ extension TaskRow {
         HStack(spacing: 0) {
             Block(width: 5)
             
-            TextField("輸入標題...", text: Binding(
+            TextField("Title...", text: Binding(
                 get: {
                     title
                 }, set: { value in
@@ -104,7 +104,7 @@ extension TaskRow {
                 .padding(.trailing, 5)
             }
 
-            TextField("輸入備註...", text: Binding(
+            TextField("Link or Description...", text: Binding(
                 get: {
                     note
                 }, set: { value in
@@ -145,13 +145,13 @@ extension TaskRow {
                     return
                 }
                 
-                if mainViewModel.Setting.PopoverKeep {
-                    print("PopoverKeep")
-                    detail = true
+                if mainViewModel.Setting.PopoverAutoClose {
+                    detail = value
                     return
                 }
+                print("PopoverKeep")
+                detail = true
                 
-                detail = value
             })
             .onTapGesture(perform: {
                 print("onTap")
@@ -197,10 +197,10 @@ extension TaskRow {
 struct TaskRow_Previews: PreviewProvider {
     static var previews: some View {
         VStack {
-            Row(Config.Task.Block)
-            Row(Config.Task.Emergency)
-            Row(Config.Task.Processing)
-            Row(Config.Task.Todo)
+            Row(.red)
+            Row(.yellow)
+            Row(.blue)
+            Row(.gray)
         }
         .frame(width: 300)
         .padding()
@@ -208,10 +208,10 @@ struct TaskRow_Previews: PreviewProvider {
         .background(.background)
         
         VStack {
-            Row(Config.Task.Block)
-            Row(Config.Task.Emergency)
-            Row(Config.Task.Processing)
-            Row(Config.Task.Todo)
+            Row(.red)
+            Row(.yellow)
+            Row(.blue)
+            Row(.gray)
         }
         .frame(width: 300)
         .padding()
@@ -220,13 +220,14 @@ struct TaskRow_Previews: PreviewProvider {
     }
     
     @MainActor
-    static func Row(_ set: TaskSettingUnit) -> some View {
+    static func Row(_ color: Color) -> some View {
         TaskRow(
             userTask: UserTask(),
-            title: "項目名稱",
-            note: "備註內容",
+            title: "",
+            note: "",
             other: "",
-            color: set.Color,
+            color: color,
             trigger: .constant(0))
+        .environment(\.locale, .init(identifier: "en_US"))
     }
 }

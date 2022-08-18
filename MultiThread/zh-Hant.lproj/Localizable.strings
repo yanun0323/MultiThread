@@ -1,0 +1,25 @@
+/* 
+  Localizable.strings
+  MultiThread
+
+  Created by YanunYang on 2022/8/18.
+  
+*/
+"Urgent" = "緊急";
+"Processing" = "進行中";
+"Todo" = "待辦";
+"Block" = "中斷";
+"Appreance" = "外觀";
+"App Width" = "視窗寬度";
+"App Height" = "視窗高度";
+"Popup Width" = "備註寬度";
+"System" = "系統";
+"Light" = "淺色";
+"Dark" = "深色";
+"Hide" = "隱藏";
+"Click To Popup" = "以點擊展開備註";
+"Auto Close Popup" = "自動收合備註";
+"Title..." = "標題...";
+"Link or Description..." = "連結或說明...";
+"Delete Task" = "刪除任務";
+"No task here" = "無任務";

@@ -11,6 +11,7 @@ import AppKit
 
 struct TaskView: View {
     @Environment(\.managedObjectContext) private var context
+    @Environment(\.locale) private var locale
     @EnvironmentObject private var mainViewModel: MainViewModel
     @Binding var taskList: [UserTask]
     @State var title: String
@@ -49,11 +50,33 @@ struct TaskView: View {
 extension TaskView {
     var LeftbarBlock: some View {
         VStack(spacing: 5) {
-            Text(title)
-                .font(.title)
-                .fontWeight(.thin)
-                .frame(width: 25)
-                .minimumScaleFactor(1)
+            if locale.description.split(separator: "_")[0].contains("en") {
+                VStack(alignment: .leading, spacing: 0) {
+                    Text(title)
+                        .font(.title)
+                        .fontWeight(.thin)
+                        .foregroundColor(.primary75)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.5)
+                        .fixedSize()
+                        .frame(height: 25)
+                        .rotationEffect(Angle(degrees: 90), anchor: .bottomLeading)
+                        .multilineTextAlignment(.leading)
+                        .offset(x: 0, y: -25)
+                }
+                .frame(
+                    width: 25,
+                    height: mainViewModel.Setting.WindowsHeight/count - 65,
+                    alignment: .topLeading
+                )
+                .clipped()
+            } else {
+                Text(title)
+                    .font(.title)
+                    .fontWeight(.thin)
+                    .frame(width: 25)
+                    .minimumScaleFactor(1)
+            }
             Spacer()
             CountAndCreaterBlock
         }
@@ -148,7 +171,7 @@ extension TaskView {
                     .background(.background)
                 }
                 .contextMenu {
-                    Button("刪除") {
+                    Button("Delete Task") {
                         withAnimation(Config.Animation.Default) {
                             DispatchQueue.main.async {
                                 taskList.removeAll(where: { $0.id == task.id })
@@ -169,16 +192,26 @@ extension TaskView {
     }
     
     var ListEmptyBlock: some DynamicViewContent {
-        ForEach(["無\(title)項目"], id: \.self) { text in
+        ForEach(0...0, id: \.self) { text in
             HStack {
                 Spacer()
-                Text(text)
+                Text("No task here")
                     .font(.title2)
                     .fontWeight(.ultraLight)
                     .foregroundColor(.primary25)
                 Spacer()
             }
         }
+    }
+}
+
+// MARK: Property
+extension TaskView {
+    var count: Double {
+        var c: Double = 4
+        if mainViewModel.Setting.HideBlock { c = 3 }
+        if mainViewModel.Setting.HideEmergency { c = 2 }
+        return c
     }
 }
 
@@ -479,6 +512,7 @@ struct TaskView_Previews: PreviewProvider {
             .frame(width: 350,height: 110)
             .background(.background)
             .environmentObject(MainViewModel())
+            .environment(\.locale, .init(identifier: "en"))
         
         
         TaskView(taskList: .constant(Mock.mainViewModel.Task.Processing),
@@ -488,6 +522,7 @@ struct TaskView_Previews: PreviewProvider {
             .frame(width: 350,height: 110)
             .background(.background)
             .environmentObject(MainViewModel())
+            .environment(\.locale, .init(identifier: "en"))
     
         TaskView(taskList: .constant([]),
                  title: Config.Task.Todo.Title,
@@ -496,6 +531,7 @@ struct TaskView_Previews: PreviewProvider {
             .frame(width: 350,height: 150)
             .background(.background)
             .environmentObject(MainViewModel())
+            .environment(\.locale, .init(identifier: "en"))
         
         TaskView(taskList: .constant(Mock.mainViewModel.Task.Emergency),
                  title: Config.Task.Emergency.Title,

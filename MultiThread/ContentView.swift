@@ -27,7 +27,8 @@ struct ContentView: View {
             }
             .padding(5)
             
-            SettingPage
+            Separator(direction: .horizontal, color: .primary25.opacity(0.3), size: 1)
+            MainPage
             
             Spacer()
         }
@@ -67,10 +68,6 @@ extension ContentView {
     
     var TaskPage: some View {
         VStack(spacing: 0) {
-            Separator(direction: .horizontal, color: .primary25, size: 1)
-                .blur(radius: 0.2)
-                .padding(2)
-            
             if !mainViewModel.Setting.HideEmergency {
                 TaskView(taskList: $mainViewModel.Task.Emergency,
                          title: Config.Task.Emergency.Title,
@@ -109,8 +106,8 @@ extension ContentView {
         }
     }
     
-    var SettingPage: some View {
-        HStack {
+    var MainPage: some View {
+        ZStack {
             switch mainViewModel.page {
                 case -1:
                     SettingView()
