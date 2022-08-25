@@ -1,13 +1,13 @@
 //
-//  DatabaseUserTask.swift
+//  ArchiveEntry.swift
 //  MultiThread
 //
-//  Created by YanunYang on 2022/7/23.
+//  Created by YanunYang on 2022/8/25.
 //
 
 import CoreData
 
-public class EmergencyEntry: NSManagedObject, DataEntry {
+public class ArchiveEntry: NSManagedObject, DataEntry {
     @NSManaged public var id: UUID
     @NSManaged public var index: Int64
     @NSManaged public var title: String
@@ -18,5 +18,5 @@ public class EmergencyEntry: NSManagedObject, DataEntry {
 }
 
 // MARK: Function
-extension EmergencyEntry {
+extension ArchiveEntry {
 }
