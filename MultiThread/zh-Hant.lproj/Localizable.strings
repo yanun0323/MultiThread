@@ -6,7 +6,7 @@
   
 */
 "Urgent" = "緊急";
-"Processing" = "進行中";
+"Normal" = "進行中";
 "Todo" = "待辦";
 "Block" = "中斷";
 "Appreance" = "外觀";
@@ -23,3 +23,8 @@
 "Link or Description..." = "連結或說明...";
 "Delete Task" = "刪除任務";
 "No task here" = "無任務";
+"Swap" = "交換";
+"Restore Task" = "還原任務";
+"Complete Task" = "完成任務";
+"Archive Task" = "封存任務";
+"Auto Archive Completed Tasks" = "自動封存已完成任務";

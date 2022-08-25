@@ -16,6 +16,7 @@ struct ContentView: View {
             Focus()
             HStack {
                 SettingButton
+                ArchiveButton
                 Spacer()
                 Text("MultiThread")
                     .font(.system(size: 14, weight: .light, design: .default))
@@ -38,11 +39,11 @@ struct ContentView: View {
 }
 
 
-// MARK: View
+// MARK: ViewBlock
 extension ContentView {
     
     var ShotdownButton: some View {
-        ButtonCustom(width: 35, height: 20, color: .red.opacity(0.9), radius: 4, style: .blank) {
+        ButtonCustom(width: 35, height: 20, color: .red.opacity(0.9), radius: 4) {
             NSApplication.shared.terminate(self)
         } content: {
             Image(systemName: "power")
@@ -53,10 +54,9 @@ extension ContentView {
     }
     
     var SettingButton: some View {
-        ButtonCustom(width: 23, height: 20, color: .clear, radius: 5, border: 0) {
+        ButtonCustom(width: 23, height: 20, color: .background, radius: 5) {
             withAnimation(Config.Animation.Default) {
                 mainViewModel.page = mainViewModel.page == -1 ? 0 : -1
-                print("page: \(mainViewModel.page)")
             }
         } content: {
             Image(systemName: "gearshape.fill")
@@ -66,10 +66,22 @@ extension ContentView {
 
     }
     
+    var ArchiveButton: some View {
+        ButtonCustom(width: 23, height: 20, color: .background, radius: 5) {
+            withAnimation(Config.Animation.Default) {
+                mainViewModel.page = mainViewModel.page == 1 ? 0 : 1
+            }
+        } content: {
+            Image(systemName: "archivebox")
+                .font(.title2)
+                .foregroundColor(mainViewModel.page == 1 ? .accentColor : .primary50)
+        }
+    }
+    
     var TaskPage: some View {
         VStack(spacing: 0) {
-            if !mainViewModel.Setting.HideEmergency {
-                TaskView(taskList: $mainViewModel.Task.Emergency,
+            if !mainViewModel.Setting.SwapEmergencyBlock && !mainViewModel.Setting.HideEmergency {
+                TaskView<EmergencyEntry>(taskList: $mainViewModel.Task.Emergency,
                          title: Config.Task.Emergency.Title,
                          mainColor: Config.Task.Emergency.Color,
                          type: .Emergency)
@@ -80,7 +92,7 @@ extension ContentView {
             }
             
             if !mainViewModel.Setting.HideBlock {
-                TaskView(taskList: $mainViewModel.Task.Blocked,
+                TaskView<BlockedEntry>(taskList: $mainViewModel.Task.Blocked,
                          title: Config.Task.Block.Title,
                          mainColor: Config.Task.Block.Color,
                          type: .Blocked)
@@ -90,7 +102,18 @@ extension ContentView {
                     .padding(2)
             }
             
-            TaskView(taskList: $mainViewModel.Task.Processing,
+            if mainViewModel.Setting.SwapEmergencyBlock && !mainViewModel.Setting.HideEmergency {
+                TaskView<EmergencyEntry>(taskList: $mainViewModel.Task.Emergency,
+                         title: Config.Task.Emergency.Title,
+                         mainColor: Config.Task.Emergency.Color,
+                         type: .Emergency)
+                
+                Separator(direction: .horizontal, color: .primary25, size: 1)
+                    .blur(radius: 0.2)
+                    .padding(2)
+            }
+            
+            TaskView<ProcessingEntry>(taskList: $mainViewModel.Task.Processing,
                      title: Config.Task.Processing.Title,
                      mainColor: Config.Task.Processing.Color,
                      type: .Processing)
@@ -99,7 +122,7 @@ extension ContentView {
                 .blur(radius: 0.2)
                 .padding(2)
             
-            TaskView(taskList: $mainViewModel.Task.Todo,
+            TaskView<TodoEntry>(taskList: $mainViewModel.Task.Todo,
                      title: Config.Task.Todo.Title,
                      mainColor: Config.Task.Todo.Color,
                      type: .Todo)
@@ -111,8 +134,12 @@ extension ContentView {
             switch mainViewModel.page {
                 case -1:
                     SettingView()
-                        .background(.background)
-                        .transition(.opacity.combined(with: .scale(scale: 0.95, anchor: .topLeading)))
+                        .transition(.opacity)
+//                        .transition(.opacity.combined(with: .scale(scale: 0.95, anchor: .top)))
+                case 1:
+                    ArchiveView()
+                        .transition(.opacity)
+//                        .transition(.opacity.combined(with: .scale(scale: 0.95, anchor: .top)))
                 default:
                     TaskPage
                         .transition(.opacity)

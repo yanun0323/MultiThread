@@ -14,6 +14,7 @@ final class UserTask: NSObject, ObservableObject, Identifiable, Codable {
     @Published var note: String = ""
     @Published var other: String = ""
     @Published var deadline: Date? = nil
+    @Published var complete: Bool = false
     
     init(title: String = "", note: String = "", ohter: String = "", deadline: Date? = nil) {
         self.id = UUID()
@@ -24,7 +25,7 @@ final class UserTask: NSObject, ObservableObject, Identifiable, Codable {
     }
     
     enum CodingKeys: CodingKey {
-        case id, title, note, other, deadline
+        case id, title, note, other, deadline, complete
     }
     
     func encode(to encoder: Encoder) throws {
@@ -35,6 +36,7 @@ final class UserTask: NSObject, ObservableObject, Identifiable, Codable {
         try container.encode(note, forKey: .note)
         try container.encode(other, forKey: .other)
         try container.encode(deadline, forKey: .deadline)
+        try container.encode(complete, forKey: .complete)
     }
     
     required init(from decoder: Decoder) throws {
@@ -45,6 +47,7 @@ final class UserTask: NSObject, ObservableObject, Identifiable, Codable {
         note = try container.decode(String.self, forKey: .note)
         other = try container.decode(String.self, forKey: .other)
         deadline = try container.decode(Date?.self, forKey: .deadline)
+        complete = try container.decode(Bool.self, forKey: .complete)
     }
     
 }

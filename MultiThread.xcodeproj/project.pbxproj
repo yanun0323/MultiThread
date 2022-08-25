@@ -22,6 +22,8 @@
 		A884C9B9288942F300E30F86 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = A884C9B8288942F300E30F86 /* Config.swift */; };
 		A884C9BD288953F000E30F86 /* Mock.swift in Sources */ = {isa = PBXBuildFile; fileRef = A884C9BC288953F000E30F86 /* Mock.swift */; };
 		A884C9BF288963D000E30F86 /* TaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A884C9BE288963D000E30F86 /* TaskView.swift */; };
+		A891C0A928B5F9D8007130AE /* DataEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = A891C0A828B5F9D8007130AE /* DataEntry.swift */; };
+		A891C0AB28B7465F007130AE /* ArchiveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A891C0AA28B7465F007130AE /* ArchiveView.swift */; };
 		A8A2C6B0288B1FE800D75458 /* NSTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8A2C6AF288B1FE800D75458 /* NSTextView.swift */; };
 		A8A2C6B2288B274E00D75458 /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8A2C6B1288B274E00D75458 /* SettingView.swift */; };
 		A8A2C6B5288B40A400D75458 /* Database.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A8A2C6B3288B40A400D75458 /* Database.xcdatamodeld */; };
@@ -36,8 +38,8 @@
 		A8629A5F2889A48800C52F07 /* NSTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSTableView.swift; sourceTree = "<group>"; };
 		A8629A612889AC3800C52F07 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		A8629A63288A4E1500C52F07 /* SwiftUIListReorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIListReorder.swift; sourceTree = "<group>"; };
-		A873256928AD608000EEBDD6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
-		A873256B28AD608100EEBDD6 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		A873256928AD608000EEBDD6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; lineEnding = 0; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		A873256B28AD608100EEBDD6 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; lineEnding = 0; name = "zh-Hant"; path = "zh-Hant.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		A884C9912888F6AD00E30F86 /* MultiThread.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MultiThread.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A884C9942888F6AD00E30F86 /* MultiThreadApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiThreadApp.swift; sourceTree = "<group>"; };
 		A884C9962888F6AD00E30F86 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -51,6 +53,8 @@
 		A884C9B8288942F300E30F86 /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		A884C9BC288953F000E30F86 /* Mock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mock.swift; sourceTree = "<group>"; };
 		A884C9BE288963D000E30F86 /* TaskView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskView.swift; sourceTree = "<group>"; };
+		A891C0A828B5F9D8007130AE /* DataEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataEntry.swift; sourceTree = "<group>"; };
+		A891C0AA28B7465F007130AE /* ArchiveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchiveView.swift; sourceTree = "<group>"; };
 		A8A2C6AF288B1FE800D75458 /* NSTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSTextView.swift; sourceTree = "<group>"; };
 		A8A2C6B1288B274E00D75458 /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
 		A8A2C6B4288B40A400D75458 /* Database.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Database.xcdatamodel; sourceTree = "<group>"; };
@@ -109,6 +113,7 @@
 				A884C9A32888F8FA00E30F86 /* View */,
 				A884C9A72888FB9600E30F86 /* Component */,
 				A884C9B7288942EC00E30F86 /* Config */,
+				A891C0A728B5F9C1007130AE /* Domain */,
 				A884C9A42888F8FF00E30F86 /* Model */,
 				A8629A5E2889A47600C52F07 /* Extension */,
 				A884C9A52888F90600E30F86 /* ViewModel */,
@@ -133,6 +138,7 @@
 			children = (
 				A884C9BE288963D000E30F86 /* TaskView.swift */,
 				A8A2C6B1288B274E00D75458 /* SettingView.swift */,
+				A891C0AA28B7465F007130AE /* ArchiveView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -182,6 +188,14 @@
 				A884C9BC288953F000E30F86 /* Mock.swift */,
 			);
 			path = Mock;
+			sourceTree = "<group>";
+		};
+		A891C0A728B5F9C1007130AE /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+				A891C0A828B5F9D8007130AE /* DataEntry.swift */,
+			);
+			path = Domain;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -262,12 +276,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A891C0A928B5F9D8007130AE /* DataEntry.swift in Sources */,
 				A8A2C6B5288B40A400D75458 /* Database.xcdatamodeld in Sources */,
 				A8A2C6B9288B41DB00D75458 /* Persistence.swift in Sources */,
 				A8629A602889A48800C52F07 /* NSTableView.swift in Sources */,
 				A884C9972888F6AD00E30F86 /* ContentView.swift in Sources */,
 				A8D2F4C1289A4E7F007952FC /* BlockedEntry.swift in Sources */,
 				A8629A64288A4E1500C52F07 /* SwiftUIListReorder.swift in Sources */,
+				A891C0AB28B7465F007130AE /* ArchiveView.swift in Sources */,
 				A884C9952888F6AD00E30F86 /* MultiThreadApp.swift in Sources */,
 				A8A2C6B2288B274E00D75458 /* SettingView.swift in Sources */,
 				A8629A622889AC3800C52F07 /* Color.swift in Sources */,
@@ -421,7 +437,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 2M10Y;
+				CURRENT_PROJECT_VERSION = 2M13Y;
 				DEVELOPMENT_ASSET_PATHS = "\"MultiThread/Preview Content\"";
 				DEVELOPMENT_TEAM = Y366CJ66L6;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -434,7 +450,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 1.1.0;
+				MARKETING_VERSION = 1.1.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.yanunyang.MultiThread;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -451,7 +467,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 2M10Y;
+				CURRENT_PROJECT_VERSION = 2M13Y;
 				DEVELOPMENT_ASSET_PATHS = "\"MultiThread/Preview Content\"";
 				DEVELOPMENT_TEAM = Y366CJ66L6;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -464,7 +480,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 1.1.0;
+				MARKETING_VERSION = 1.1.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.yanunyang.MultiThread;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;

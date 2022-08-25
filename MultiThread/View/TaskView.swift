@@ -9,7 +9,7 @@ import SwiftUI
 import UIComponent
 import AppKit
 
-struct TaskView: View {
+struct TaskView<T>: View where T: NSManagedObject & DataEntry {
     @Environment(\.managedObjectContext) private var context
     @Environment(\.locale) private var locale
     @EnvironmentObject private var mainViewModel: MainViewModel
@@ -111,7 +111,7 @@ extension TaskView {
     
     var CountAndCreaterBlock: some View {
         ZStack {
-            if hovered {
+            if hovered || taskList.isEmpty {
                 CreateButton {
                     CreateAction()
                 }
@@ -129,7 +129,7 @@ extension TaskView {
     }
     
     func CreateButton(action: @escaping () -> Void) -> some View  {
-        ButtonCustom(width: 25, action: action) {
+        ButtonCustom(width: 25, height: 22, action: action) {
             Text("+")
                 .foregroundColor(mainColor)
                 .font(.title)
@@ -171,13 +171,24 @@ extension TaskView {
                     .background(.background)
                 }
                 .contextMenu {
-                    Button("Delete Task") {
+                    Button {
+                        withAnimation(Config.Animation.Default) {
+                            DispatchQueue.main.async {
+                            }
+                        }
+                    } label: {
+                        Text("Archive Task")
+                    }
+                    Button{
                         withAnimation(Config.Animation.Default) {
                             DispatchQueue.main.async {
                                 taskList.removeAll(where: { $0.id == task.id })
                                 DeleteFromDatabase(task)
                             }
                         }
+                    } label: {
+                        Text("Delete Task")
+                            .foregroundColor(.red)
                     }
                 }
                 .onChange(of: DatabaseTaskRowTrigger) { _ in
@@ -273,6 +284,7 @@ extension TaskView {
             userTask.note = entry.note
             userTask.other = entry.other
             userTask.deadline = entry.deadline
+            userTask.complete = entry.complete
             result.append(userTask)
         }
         return result
@@ -287,6 +299,7 @@ extension TaskView {
             userTask.note = entry.note
             userTask.other = entry.other
             userTask.deadline = entry.deadline
+            userTask.complete = entry.complete
             result.append(userTask)
         }
         return result
@@ -301,6 +314,7 @@ extension TaskView {
             userTask.note = entry.note
             userTask.other = entry.other
             userTask.deadline = entry.deadline
+            userTask.complete = entry.complete
             result.append(userTask)
         }
         return result
@@ -315,6 +329,7 @@ extension TaskView {
             userTask.note = entry.note
             userTask.other = entry.other
             userTask.deadline = entry.deadline
+            userTask.complete = entry.complete
             result.append(userTask)
         }
         return result
@@ -390,6 +405,7 @@ extension TaskView {
             entry.note = task.note
             entry.other = task.other
             entry.deadline = task.deadline
+            entry.complete = task.complete
         }
         
         for index in 0 ..< processingEntry.count {
@@ -401,6 +417,7 @@ extension TaskView {
             entry.note = task.note
             entry.other = task.other
             entry.deadline = task.deadline
+            entry.complete = task.complete
         }
         
         for index in 0 ..< todoEntry.count {
@@ -412,6 +429,7 @@ extension TaskView {
             entry.note = task.note
             entry.other = task.other
             entry.deadline = task.deadline
+            entry.complete = task.complete
         }
         
         for index in 0 ..< blockedEntry.count {
@@ -423,6 +441,7 @@ extension TaskView {
             entry.note = task.note
             entry.other = task.other
             entry.deadline = task.deadline
+            entry.complete = task.complete
         }
         
         do {
@@ -445,6 +464,7 @@ extension TaskView {
             newItem.note = userTask.note
             newItem.other = userTask.other
             newItem.deadline = userTask.deadline
+            newItem.complete = userTask.complete
         case .Processing:
             let newItem = ProcessingEntry(context: context)
             newItem.index = Int64(processingEntry.count)
@@ -453,6 +473,7 @@ extension TaskView {
             newItem.note = userTask.note
             newItem.other = userTask.other
             newItem.deadline = userTask.deadline
+            newItem.complete = userTask.complete
         case .Todo:
             let newItem = TodoEntry(context: context)
             newItem.index = Int64(todoEntry.count)
@@ -461,6 +482,7 @@ extension TaskView {
             newItem.note = userTask.note
             newItem.other = userTask.other
             newItem.deadline = userTask.deadline
+            newItem.complete = userTask.complete
         case .Blocked:
             let newItem = BlockedEntry(context: context)
             newItem.index = Int64(blockedEntry.count)
@@ -469,6 +491,7 @@ extension TaskView {
             newItem.note = userTask.note
             newItem.other = userTask.other
             newItem.deadline = userTask.deadline
+            newItem.complete = userTask.complete
         }
         
         do {
@@ -505,7 +528,7 @@ extension TaskView {
 
 struct TaskView_Previews: PreviewProvider {
     static var previews: some View {
-        TaskView(taskList: .constant(Mock.mainViewModel.Task.Emergency),
+        TaskView<EmergencyEntry>(taskList: .constant(Mock.mainViewModel.Task.Emergency),
                  title: Config.Task.Emergency.Title,
                  mainColor: Config.Task.Emergency.Color
                  ,type: .Emergency)
@@ -515,7 +538,7 @@ struct TaskView_Previews: PreviewProvider {
             .environment(\.locale, .init(identifier: "en"))
         
         
-        TaskView(taskList: .constant(Mock.mainViewModel.Task.Processing),
+        TaskView<ProcessingEntry>(taskList: .constant(Mock.mainViewModel.Task.Processing),
                  title: Config.Task.Processing.Title,
                  mainColor: Config.Task.Processing.Color
                  ,type: .Processing)
@@ -524,7 +547,7 @@ struct TaskView_Previews: PreviewProvider {
             .environmentObject(MainViewModel())
             .environment(\.locale, .init(identifier: "en"))
     
-        TaskView(taskList: .constant([]),
+        TaskView<TodoEntry>(taskList: .constant([]),
                  title: Config.Task.Todo.Title,
                  mainColor: Config.Task.Todo.Color
                  ,type: .Todo)
@@ -533,7 +556,7 @@ struct TaskView_Previews: PreviewProvider {
             .environmentObject(MainViewModel())
             .environment(\.locale, .init(identifier: "en"))
         
-        TaskView(taskList: .constant(Mock.mainViewModel.Task.Emergency),
+        TaskView<EmergencyEntry>(taskList: .constant(Mock.mainViewModel.Task.Emergency),
                  title: Config.Task.Emergency.Title,
                  mainColor: Config.Task.Emergency.Color
                  ,type: .Emergency)
@@ -543,7 +566,7 @@ struct TaskView_Previews: PreviewProvider {
             .environmentObject(MainViewModel())
         
         
-        TaskView(taskList: .constant(Mock.mainViewModel.Task.Processing),
+        TaskView<ProcessingEntry>(taskList: .constant(Mock.mainViewModel.Task.Processing),
                  title: Config.Task.Processing.Title,
                  mainColor: Config.Task.Processing.Color
                  ,type: .Processing)
@@ -552,7 +575,7 @@ struct TaskView_Previews: PreviewProvider {
             .preferredColorScheme(.dark)
             .environmentObject(MainViewModel())
     
-        TaskView(taskList: .constant([]),
+        TaskView<TodoEntry>(taskList: .constant([]),
                  title: Config.Task.Todo.Title,
                  mainColor: Config.Task.Todo.Color
                  ,type: .Todo)

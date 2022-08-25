@@ -12,13 +12,15 @@ let VERSION = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? Stri
 struct SettingView: View {
     @EnvironmentObject private var mainViewModel: MainViewModel
     @Environment(\.openURL) private var openURL
-    @Environment(\.locale) private var locale
     @State private var appearance: Int = 0
     @State private var hideBlock: Bool = false
     @State private var hideEmergency: Bool = false
     @State private var windowWidth: CGFloat = Config.Windows.MinWidth
     private let _SliderScale: CGFloat = 1
     private let _TextWidth: CGFloat = 120
+    
+    @State private var blockTitle = Config.Task.Block.Title
+    @State private var emergencyTitle = Config.Task.Emergency.Title
 
     
     var body: some View {
@@ -36,22 +38,38 @@ struct SettingView: View {
 
                 PopoverWidthBlock
 
-                HStack {
-                    Spacer()
-                    VStack(spacing: 10) {
-                        HideBlockedBlock
-                        HideEmergencyBlock
+                VStack(spacing: 10) {
+                    HStack {
+                        Spacer()
+                        VStack(spacing: 10) {
+                            HideBlockedBlock
+                            HideEmergencyBlock
+                        }
+                        .frame(width: 130, alignment: .leading)
+                        Spacer()
+                        VStack(spacing: 10) {
+                            PopoverClickBlock
+                            PopoverKeepBlock
+                                .foregroundColor(mainViewModel.Setting.PopoverClick ? .primary25 : .primary)
+                                .disabled(mainViewModel.Setting.PopoverClick)
+                        }
+                        .frame(width: 155, alignment: .leading)
+                        Spacer()
                     }
-                    .frame(width: 120, alignment: .leading)
-                    Spacer()
-                    VStack(spacing: 10) {
-                        PopoverClickBlock
-                        PopoverKeepBlock
-                            .foregroundColor(mainViewModel.Setting.PopoverClick ? .primary25 : .primary)
-                            .disabled(mainViewModel.Setting.PopoverClick)
+                    HStack {
+                        Spacer()
+                        SwapEmergencyBlockedBlock
+                            .frame(width: 285, alignment: .leading)
+                        Spacer()
+                        Spacer()
                     }
-                    .frame(width: 155, alignment: .leading)
-                    Spacer()
+                    HStack {
+                        Spacer()
+                        AutoArchiveBlock
+                            .frame(width: 285, alignment: .leading)
+                        Spacer()
+                        Spacer()
+                    }
                 }
                 
                 Spacer()
@@ -85,7 +103,7 @@ extension SettingView {
             HStack(spacing: 20) {
                 Spacer()
                 VStack(spacing: 10) {
-                    ButtonCustom(width: 60, height: 40, radius: 5, border: 0) {
+                    ButtonCustom(width: 60, height: 40, radius: 5) {
                         withAnimation(Config.Animation.Default) {
                             NSApp.appearance = nil
                             mainViewModel.Setting.Appearance = nil
@@ -121,7 +139,7 @@ extension SettingView {
                     Text("System")
                 }
                 VStack(spacing: 10)  {
-                    ButtonCustom(width: 60, height: 40, radius: 5, border: 0) {
+                    ButtonCustom(width: 60, height: 40, radius: 5) {
                         withAnimation(Config.Animation.Default) {
                             NSApp.appearance = NSAppearance(named: .aqua)
                             mainViewModel.Setting.Appearance = NSAppearance(named: .aqua)
@@ -139,7 +157,7 @@ extension SettingView {
                     Text("Light")
                 }
                 VStack(spacing: 10)  {
-                    ButtonCustom(width: 60, height: 40, radius: 5, border: 0) {
+                    ButtonCustom(width: 60, height: 40, radius: 5) {
                         withAnimation(Config.Animation.Default) {
                             NSApp.appearance = NSAppearance(named: .darkAqua)
                             mainViewModel.Setting.Appearance = NSAppearance(named: .darkAqua)
@@ -278,7 +296,7 @@ extension SettingView {
     var HideBlockedBlock: some View {
         HStack(spacing: 10) {
             Toggle("", isOn: $mainViewModel.Setting.HideBlock)
-            Text(String(localized: "Hide")) + Text(" '\(Config.Task.Block.Title)'")
+            Text("Hide") + Text(" '\(blockTitle)'")
             Spacer()
         }
     }
@@ -286,7 +304,25 @@ extension SettingView {
     var HideEmergencyBlock: some View {
         HStack(spacing: 10) {
             Toggle("", isOn: $mainViewModel.Setting.HideEmergency)
-            Text(String(localized: "Hide")) + Text(" '\(Config.Task.Emergency.Title)'")
+            Text("Hide") + Text(" '\(Config.Task.Emergency.Title)'")
+            Spacer()
+        }
+    }
+    
+    var SwapEmergencyBlockedBlock: some View {
+        HStack(spacing: 10) {
+            Toggle("", isOn: $mainViewModel.Setting.SwapEmergencyBlock)
+            Text("Swap") +
+            Text(" '\(Config.Task.Emergency.Title)'") +
+            Text(" '\(Config.Task.Block.Title)'")
+            Spacer()
+        }
+    }
+    
+    var AutoArchiveBlock: some View {
+        HStack(spacing: 10) {
+            Toggle("", isOn: $mainViewModel.Setting.AutoArchive)
+            Text("Auto Archive Completed Tasks")
             Spacer()
         }
     }
@@ -351,9 +387,7 @@ extension SettingView {
                 .frame(height: 100)
             Spacer()
             VStack(alignment: .leading, spacing: 0) {
-                ButtonCustom(
-                    width: 70, height: 15, style: .linked
-                ) {
+                ButtonCustom(width: 70, height: 15) {
                     let link = "https://www.yanunyang.com/multithread"
                     guard let component = URLComponents(string: link) else { return }
                     if let url = component.url {

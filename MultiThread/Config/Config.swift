@@ -23,13 +23,13 @@ struct PopoverSetting {
 struct WindowsSetting {
     let MinWidth: CGFloat = 350
     let MaxWidth: CGFloat = 500
-    let MinHeight: CGFloat = 500
+    let MinHeight: CGFloat = 600
     let MaxHeight: CGFloat = 1000
 }
 
 struct TaskSetting {
     let Emergency = TaskSettingUnit(Title: String(localized: "Urgent"), Color: .red)
-    let Processing = TaskSettingUnit(Title: String(localized: "Processing"), Color: .accentColor)
+    let Processing = TaskSettingUnit(Title: String(localized: "Normal"), Color: .accentColor)
     let Todo = TaskSettingUnit(Title: String(localized: "Todo"), Color: .gray)
     let Block = TaskSettingUnit(Title: String(localized: "Block"), Color: .yellow)
 }

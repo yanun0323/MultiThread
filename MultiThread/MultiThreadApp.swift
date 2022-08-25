@@ -49,7 +49,6 @@ struct MultiThreadApp: App {
 }
 
 class AppDelegate: NSObject, NSApplicationDelegate, ObservableObject {
-    
     private var statusItem: NSStatusItem?
     private var popOver = NSPopover()
     private let persistenceController = PersistenceController.shared

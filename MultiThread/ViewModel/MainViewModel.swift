@@ -8,9 +8,10 @@
 import Foundation
 import AppKit
 import CoreData
+import SwiftUI
 
 class MainViewModel: ObservableObject {
-    @Published var PopOver = NSPopover()
+    @Published public var PopOver = NSPopover()
     @Published public var Task = UserTaskCollection()
     @Published public var Setting = UserSetting()
     @Published public var page: Int = 0
@@ -32,14 +33,15 @@ struct UserTaskHistory {
 }
 
 struct UserSetting {
-    private var language: String = UserDefaults.standard.string(forKey: "Language") ?? ""
-    var Language: Locale {
+    
+    private var autoArchive: Bool = UserDefaults.standard.bool(forKey: "AutoArchive")
+    var AutoArchive: Bool {
         get {
-            return language.isEmpty ? Locale.current : .init(identifier: language)
+            return autoArchive
         }
         set {
-            self.language = newValue.description
-            UserDefaults.standard.set(language, forKey: "Language")
+            self.autoArchive = newValue
+            UserDefaults.standard.set(autoArchive, forKey: "AutoArchive")
         }
     }
     
@@ -95,6 +97,17 @@ struct UserSetting {
         set {
             self.windowsHeight = newValue
             UserDefaults.standard.set(windowsHeight, forKey: "WindowsHeight")
+        }
+    }
+    
+    private var swapEmergencyBlock: Bool = UserDefaults.standard.bool(forKey: "SwapEmergencyBlock")
+    var SwapEmergencyBlock: Bool {
+        get {
+            return swapEmergencyBlock
+        }
+        set {
+            self.swapEmergencyBlock = newValue
+            UserDefaults.standard.set(swapEmergencyBlock, forKey: "SwapEmergencyBlock")
         }
     }
     

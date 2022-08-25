@@ -5,4 +5,26 @@
   Created by YanunYang on 2022/8/18.
   
 */
+"Urgent" = "Urgent";
+"Normal" = "Normal";
+"Todo" = "Todo";
+"Block" = "Block";
 "Appreance" = "Appreance";
+"App Width" = "App Width";
+"App Height" = "App Height";
+"Popup Width" = "Popup Width";
+"System" = "System";
+"Light" = "Light";
+"Dark" = "Dark";
+"Hide" = "Hide";
+"Click To Popup" = "Click To Popup";
+"Auto Close Popup" = "Auto Close Popup";
+"Title..." = "Title...";
+"Link or Description..." = "Link or Description...";
+"Delete Task" = "Delete Task";
+"No task here" = "No task here";
+"Swap" = "Swap";
+"Restore Task" = "Restore Task";
+"Complete Task" = "Complete Task";
+"Archive Task" = "Archive Task";
+"Auto Archive Completed Tasks" = "Auto Archive Completed Tasks";
