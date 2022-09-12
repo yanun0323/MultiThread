@@ -128,7 +128,7 @@ extension TaskRow {
     }
     
     var CompleteBlock: some View {
-        ButtonCustom(width: 25, height: 25, color: .background, radius: 5) {
+        ButtonCustom(width: 25, height: 25, color: .clean, radius: 5) {
             withAnimation(Config.Animation.Default) {
                 userTask.complete.toggle()
                 trigger = (trigger+1)%10
@@ -141,7 +141,7 @@ extension TaskRow {
     }
     
     var PopoverTrigerBlock: some View {
-        ButtonCustom(width: 25, height: 25, color: .background, radius: 5) {
+        ButtonCustom(width: 25, height: 25, color: .clean, radius: 5) {
             if mainViewModel.Setting.PopoverClick {
                 detail = true
             }

@@ -54,7 +54,7 @@ extension ContentView {
     }
     
     var SettingButton: some View {
-        ButtonCustom(width: 23, height: 20, color: .background, radius: 5) {
+        ButtonCustom(width: 23, height: 20, color: .clean, radius: 5) {
             withAnimation(Config.Animation.Default) {
                 mainViewModel.page = mainViewModel.page == -1 ? 0 : -1
             }
@@ -67,7 +67,7 @@ extension ContentView {
     }
     
     var ArchiveButton: some View {
-        ButtonCustom(width: 23, height: 20, color: .background, radius: 5) {
+        ButtonCustom(width: 23, height: 20, color: .clean, radius: 5) {
             withAnimation(Config.Animation.Default) {
                 mainViewModel.page = mainViewModel.page == 1 ? 0 : 1
             }
